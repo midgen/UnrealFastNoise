@@ -16,3 +16,5 @@ Select - Selects from one of two input modules, based on the value of a third
 Blend - Blends between two input modules, based on the value of a third
 
 ScaleBias - Applies a multiplier and/or additive value to an input module
+
+![Blueprint Example](http://www.cashworth.net/images/articleshots/unrealfastnoise_screen.png)
