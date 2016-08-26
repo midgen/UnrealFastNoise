@@ -10,6 +10,9 @@ But wrapped in a Blueprint-friendly interface along with some helpful modules fo
 Modules:
 
 Noise Generator - The main noise generator class
+
 Select - Selects from one of two input modules, based on the value of a third
+
 Blend - Blends between two input modules, based on the value of a third
+
 ScaleBias - Applies a multiplier and/or additive value to an input module
