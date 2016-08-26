@@ -53,20 +53,29 @@ class UFastNoise : public UUFNNoiseGenerator
 public:
 	~UFastNoise() { delete m_cellularNoiseLookup; }
 
-
+	UFUNCTION(BlueprintCallable, Category="UnrealFastNoise")
 	void SetSeed(int seed) { m_seed = seed; }
-	int GetSeed(void) { return m_seed; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
+	int GetSeed() { return m_seed; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetFrequency(float frequency) { m_frequency = frequency; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetInterp(EInterp interp) { m_interp = interp; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetNoiseType(ENoiseType noiseType) { m_noiseType = noiseType; }
-
-	void SetFractalOctaves(unsigned int octaves) { m_octaves = octaves; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
+	void SetFractalOctaves(int octaves) { m_octaves = octaves; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetFractalLacunarity(float lacunarity) { m_lacunarity = lacunarity; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetFractalGain(float gain) { m_gain = gain; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetFractalType(EFractalType fractalType) { m_fractalType = fractalType; }
-
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetCellularDistanceFunction(ECellularDistanceFunction cellularDistanceFunction) { m_cellularDistanceFunction = cellularDistanceFunction; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetCellularReturnType(ECellularReturnType cellularReturnType) { m_cellularReturnType = cellularReturnType; }
+	UFUNCTION(BlueprintCallable, Category = "UnrealFastNoise")
 	void SetCellularNoiseLookup(UFastNoise* noise) { m_cellularNoiseLookup = noise; }
 
 	/*

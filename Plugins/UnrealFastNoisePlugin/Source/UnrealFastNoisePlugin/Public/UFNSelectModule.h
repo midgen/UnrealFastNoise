@@ -16,6 +16,7 @@ public:
 	UUFNNoiseGenerator* inputModule2;
 	UUFNNoiseGenerator* selectModule;
 
+	float threshold;
 	float falloff;
 
 };

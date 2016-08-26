@@ -5,63 +5,68 @@
 #include "UFNScaleBiasModule.h"
 #include "UFNBlueprintFunctionLibrary.h"
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* aOuter, ENoiseType aNoiseType, EFractalType aFractalType, int32 aSeed, int32 aOctaves, float aFrequency)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity)
 {
-	UFastNoise* noiseGen = NewObject<UFastNoise>(aOuter, UFastNoise::StaticClass());
+	UFastNoise* noiseGen = NewObject<UFastNoise>(outer, UFastNoise::StaticClass());
 
-	noiseGen->SetNoiseType(aNoiseType);
-	noiseGen->SetSeed(aSeed);
-	noiseGen->SetFractalOctaves(aOctaves);
-	noiseGen->SetFrequency(aFrequency);
-	noiseGen->SetFractalType(aFractalType);
+	noiseGen->SetNoiseType(noiseType);
+	noiseGen->SetSeed(seed);
+	noiseGen->SetFractalOctaves(octaves);
+	noiseGen->SetFrequency(frequency);
+	noiseGen->SetFractalType(fractalType);
+	noiseGen->SetFractalLacunarity(lacunarity);
+	noiseGen->SetCellularDistanceFunction(cellularDistanceFunction);
+	noiseGen->SetCellularReturnType(cellularReturnType);
+	noiseGen->SetInterp(interpolation);
 
 	return noiseGen;
 }
 
 
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSelectModule(UObject* aOuter, UUFNNoiseGenerator* aInputModule1, UUFNNoiseGenerator* aInputModule2, UUFNNoiseGenerator* aSelectModule, float aFalloff)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSelectModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* selectModule, float falloff, float threshold)
 {
-	if (!(aInputModule1 && aInputModule2 && aSelectModule && aOuter)){
+	if (!(inputModule1 && inputModule2 && selectModule && outer)){
 		return nullptr;
 	}
 
-	UUFNSelectModule* selectModule = NewObject<UUFNSelectModule>(aOuter, UUFNSelectModule::StaticClass());
+	UUFNSelectModule* newSelectModule = NewObject<UUFNSelectModule>(outer, UUFNSelectModule::StaticClass());
 
-	selectModule->inputModule1 = aInputModule1;
-	selectModule->inputModule2 = aInputModule2;
-	selectModule->selectModule = aSelectModule;
-	selectModule->falloff = aFalloff;
+	newSelectModule->inputModule1 = inputModule1;
+	newSelectModule->inputModule2 = inputModule2;
+	newSelectModule->selectModule = selectModule;
+	newSelectModule->falloff = falloff;
+	newSelectModule->threshold = threshold;
 
-	return selectModule;
+	return newSelectModule;
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateBlendModule(UObject* aOuter, UUFNNoiseGenerator* aInputModule1, UUFNNoiseGenerator* aInputModule2, UUFNNoiseGenerator* aSelectModule)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateBlendModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* selectModule)
 {
-	if (!(aInputModule1 && aInputModule2 && aSelectModule && aOuter)) {
+	if (!(inputModule1 && inputModule2 && selectModule && outer)) {
 		return nullptr;
 	}
 
-	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(aOuter, UUFNBlendModule::StaticClass());
+	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(outer, UUFNBlendModule::StaticClass());
 
-	blendModule->inputModule1 = aInputModule1;
-	blendModule->inputModule2 = aInputModule2;
-	blendModule->selectModule = aSelectModule;
+	blendModule->inputModule1 = inputModule1;
+	blendModule->inputModule2 = inputModule2;
+	blendModule->selectModule = selectModule;
 
 	return blendModule;
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateScaleBiasModule(UObject* aOuter, UUFNNoiseGenerator* aInputModule, float aScale, float aBias)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateScaleBiasModule(UObject* outer, UUFNNoiseGenerator* inputModule, float scale, float bias)
 {
-	if (!(aInputModule && aOuter)) {
+	if (!(inputModule && outer)) {
 		return nullptr;
 	}
 
-	UUFNScaleBiasModule* scaleBiasModule = NewObject<UUFNScaleBiasModule>(aOuter, UUFNScaleBiasModule::StaticClass());
+	UUFNScaleBiasModule* scaleBiasModule = NewObject<UUFNScaleBiasModule>(outer, UUFNScaleBiasModule::StaticClass());
 
-	scaleBiasModule->inputModule = aInputModule;
-	scaleBiasModule->scale = aScale;
-	scaleBiasModule->bias = aBias;
+	scaleBiasModule->inputModule = inputModule;
+	scaleBiasModule->scale = scale;
+	scaleBiasModule->bias = bias;
 
 	return scaleBiasModule;
 }

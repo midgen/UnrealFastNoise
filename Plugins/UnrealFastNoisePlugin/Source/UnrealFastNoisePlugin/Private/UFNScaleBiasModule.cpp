@@ -14,9 +14,7 @@ float UUFNScaleBiasModule::GetNoise3D(float aX, float aY, float aZ)
 		return 0.0f;
 	}
 
-	return inputModule->GetNoise3D(aX, aY, aZ) * scale + bias;
-
-	return 0.0f;
+	return (inputModule->GetNoise3D(aX, aY, aZ) * scale) + bias;
 }
 
 float UUFNScaleBiasModule::GetNoise2D(float aX, float aY)
@@ -25,6 +23,6 @@ float UUFNScaleBiasModule::GetNoise2D(float aX, float aY)
 		return 0.0f;
 	}
 
-	return inputModule->GetNoise2D(aX, aY) * scale + bias;
+	return (inputModule->GetNoise2D(aX, aY) * scale) + bias;
 }
 
