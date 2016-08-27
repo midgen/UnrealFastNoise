@@ -301,7 +301,7 @@ float UFastNoise::GradCoord4D(unsigned char offset, int x, int y, int z, int w, 
 	return xd*GRAD_4D[lutPos] + yd*GRAD_4D[lutPos + 1] + zd*GRAD_4D[lutPos + 2] + wd*GRAD_4D[lutPos + 3];
 }
 
-float UFastNoise::GetNoise3D(float x, float y, float z)
+float UFastNoise::GetNoise(float x, float y, float z)
 {
 	x *= m_frequency;
 	y *= m_frequency;
@@ -368,7 +368,7 @@ float UFastNoise::GetNoise3D(float x, float y, float z)
 	}
 }
 
-float UFastNoise::GetNoise2D(float x, float y)
+float UFastNoise::GetNoise(float x, float y)
 {
 	x *= m_frequency;
 	y *= m_frequency;
@@ -1498,7 +1498,7 @@ float UFastNoise::SingleCellular(float x, float y, float z)
 		check(m_cellularNoiseLookup);
 
 		lutPos = Index3D_256(0, xc, yc, zc);
-		return m_cellularNoiseLookup->GetNoise3D(xc + CELL_3D_X[lutPos], yc + CELL_3D_Y[lutPos], zc + CELL_3D_Z[lutPos]);
+		return m_cellularNoiseLookup->GetNoise(xc + CELL_3D_X[lutPos], yc + CELL_3D_Y[lutPos], zc + CELL_3D_Z[lutPos]);
 
 	case ECellularReturnType::Distance:
 		return distance - 1.0f;
@@ -1705,7 +1705,7 @@ float UFastNoise::SingleCellular(float x, float y)
 		check(m_cellularNoiseLookup);
 
 		lutPos = Index2D_256(0, xc, yc);
-		return m_cellularNoiseLookup->GetNoise2D(xc + CELL_2D_X[lutPos], yc + CELL_2D_Y[lutPos]);
+		return m_cellularNoiseLookup->GetNoise(xc + CELL_2D_X[lutPos], yc + CELL_2D_Y[lutPos]);
 
 	case ECellularReturnType::Distance:
 		return distance - 1.0f;
@@ -1950,4 +1950,36 @@ void UFastNoise::SinglePositionWarp(unsigned char offset, float warpAmp, float f
 
 	x += Lerp(lx0x, lx1x, ys) * warpAmp;
 	y += Lerp(ly0x, ly1x, ys) * warpAmp;
+}
+
+float UFastNoise::GetNoise2D(float x, float y)
+{
+	switch (m_positionWarpType)
+	{
+	default:
+	case EPositionWarpType::None:
+		return GetNoise(x, y);
+	case EPositionWarpType::Fractal:
+		PositionWarpFractal(x, y);
+		return GetNoise(x, y);
+	case EPositionWarpType::Regular:
+		PositionWarp(x, y);
+		return GetNoise(x, y);
+	}
+}
+
+float UFastNoise::GetNoise3D(float x, float y, float z)
+{
+	switch (m_positionWarpType)
+	{
+	default:
+	case EPositionWarpType::None:
+		return GetNoise(x, y, z);
+	case EPositionWarpType::Fractal:
+		PositionWarpFractal(x, y, z);
+		return GetNoise(x, y, z);
+	case EPositionWarpType::Regular:
+		PositionWarp(x, y, z);
+		return GetNoise(x, y, z);
+	}
 }

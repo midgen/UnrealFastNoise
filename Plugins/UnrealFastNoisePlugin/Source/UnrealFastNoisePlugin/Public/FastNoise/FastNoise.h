@@ -44,6 +44,8 @@ UENUM(BlueprintType)
 enum ECellularDistanceFunction { Euclidean, Manhattan, Natural };
 UENUM(BlueprintType)
 enum ECellularReturnType { CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div};
+UENUM(BlueprintType)
+enum EPositionWarpType { None, Regular, Fractal };
 
 
 UCLASS()
@@ -110,6 +112,7 @@ public:
 	// Sets the maximum warp distance from original location when using PositionWarp{Fractal}(...)
 	// Default: 1.0
 	void SetPositionWarpAmp(float positionWarpAmp) { m_positionWarpAmp = positionWarpAmp / 0.45f; }
+	void SetPositionWarpType(EPositionWarpType positionWarpType) { m_positionWarpType = positionWarpType; }
 
 	//2D												
 	float GetValue(float x, float y);
@@ -126,6 +129,7 @@ public:
 	float GetWhiteNoise(float x, float y);
 	float GetWhiteNoiseInt(int x, int y);
 
+	float GetNoise(float x, float y);
 	float GetNoise2D(float x, float y);
 
 	void PositionWarp(float& x, float& y);
@@ -146,6 +150,7 @@ public:
 	float GetWhiteNoise(float x, float y, float z);
 	float GetWhiteNoiseInt(int x, int y, int z);
 
+	float GetNoise(float x, float y, float z);
 	float GetNoise3D(float x, float y, float z);
 
 	void PositionWarp(float& x, float& y, float& z);
@@ -165,6 +170,8 @@ protected:
 	float m_frequency = 0.01f;
 	EInterp m_interp = EInterp::InterpQuintic;
 	ENoiseType m_noiseType = ENoiseType::Simplex;
+
+	EPositionWarpType m_positionWarpType = EPositionWarpType::None;
 
 	unsigned int m_octaves = 3;
 	float m_lacunarity = 2.0f;

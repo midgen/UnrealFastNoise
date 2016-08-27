@@ -5,7 +5,7 @@
 #include "UFNScaleBiasModule.h"
 #include "UFNBlueprintFunctionLibrary.h"
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, EPositionWarpType positionWarpType, float positionWarpAmplitude)
 {
 	UFastNoise* noiseGen = NewObject<UFastNoise>(outer, UFastNoise::StaticClass());
 
@@ -18,6 +18,8 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* 
 	noiseGen->SetCellularDistanceFunction(cellularDistanceFunction);
 	noiseGen->SetCellularReturnType(cellularReturnType);
 	noiseGen->SetInterp(interpolation);
+	noiseGen->SetPositionWarpAmp(positionWarpAmplitude);
+	noiseGen->SetPositionWarpType(positionWarpType);
 
 	return noiseGen;
 }
