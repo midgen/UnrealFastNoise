@@ -7,7 +7,7 @@
 
 UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, EPositionWarpType positionWarpType, float positionWarpAmplitude)
 {
-	UFastNoise* noiseGen = NewObject<UFastNoise>(outer, UFastNoise::StaticClass());
+	UFastNoise* noiseGen = NewObject<UFastNoise>(outer, FName("NoiseGen"));
 
 	noiseGen->SetNoiseType(noiseType);
 	noiseGen->SetSeed(seed);
@@ -32,7 +32,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSelectModule(UObject* ou
 		return nullptr;
 	}
 
-	UUFNSelectModule* newSelectModule = NewObject<UUFNSelectModule>(outer, UUFNSelectModule::StaticClass());
+	UUFNSelectModule* newSelectModule = NewObject<UUFNSelectModule>(outer, FName("Select"));
 
 	newSelectModule->inputModule1 = inputModule1;
 	newSelectModule->inputModule2 = inputModule2;
@@ -49,7 +49,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateBlendModule(UObject* out
 		return nullptr;
 	}
 
-	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(outer, UUFNBlendModule::StaticClass());
+	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(outer, FName("Blend"));
 
 	blendModule->inputModule1 = inputModule1;
 	blendModule->inputModule2 = inputModule2;
@@ -64,7 +64,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateScaleBiasModule(UObject*
 		return nullptr;
 	}
 
-	UUFNScaleBiasModule* scaleBiasModule = NewObject<UUFNScaleBiasModule>(outer, UUFNScaleBiasModule::StaticClass());
+	UUFNScaleBiasModule* scaleBiasModule = NewObject<UUFNScaleBiasModule>(outer, FName("ScaleBias"));
 
 	scaleBiasModule->inputModule = inputModule;
 	scaleBiasModule->scale = scale;
