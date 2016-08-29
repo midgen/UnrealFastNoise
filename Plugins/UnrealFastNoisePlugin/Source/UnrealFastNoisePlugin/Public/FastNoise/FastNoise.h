@@ -35,9 +35,39 @@
 #include "FastNoise.generated.h"
 
 UENUM(BlueprintType)
-enum ENoiseType { Value, ValueFractal, Gradient, GradientFractal, Simplex, SimplexFractal, Cellular, WhiteNoise };
+enum class ENoiseType : uint8
+{ 
+	Value,
+	ValueFractal,
+	Gradient,
+	GradientFractal,
+	Simplex,
+	SimplexFractal,
+	Cellular,
+	WhiteNoise 
+};
 UENUM(BlueprintType)
-enum EInterp { InterpLinear, InterpHermite, InterpQuintic };
+enum class ESimpleNoiseType : uint8 
+{ 
+	SimpleValue UMETA(DisplayName="Value"),
+	SimpleGradient UMETA(DisplayName = "Gradient"),
+	SimpleSimplex UMETA(DisplayName = "Simplex"),
+	SimpleWhiteNoise UMETA(DisplayName = "WhiteNoise")
+};
+UENUM(BlueprintType)
+enum class EFractalNoiseType : uint8
+{ 
+	FractalValue UMETA(DisplayName = "Value"),
+	FractalGradient UMETA(DisplayName = "Gradient"),
+	FractalSimplex UMETA(DisplayName = "Simplex")
+};
+UENUM(BlueprintType)
+enum class EInterp : uint8 
+{ 
+	InterpLinear UMETA(DisplayName = "Linear"),
+	InterpHermite UMETA(DisplayName = "Hermite"),
+	InterpQuintic UMETA(DisplayName = "Quintic")
+};
 UENUM(BlueprintType)
 enum EFractalType { FBM, Billow, RigidMulti };
 UENUM(BlueprintType)
@@ -46,6 +76,21 @@ UENUM(BlueprintType)
 enum ECellularReturnType { CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div};
 UENUM(BlueprintType)
 enum EPositionWarpType { None, Regular, Fractal };
+UENUM(BlueprintType)
+enum class ESelectInterpType : uint8
+{
+	None,
+	CircularIn,
+	CircularOut,
+	CircularInOut,
+	ExponentialIn,
+	ExponentialOut,
+	ExponentialInOut,
+	SineIn,
+	SineOut,
+	SineInOut,
+	Step
+};
 
 
 UCLASS()

@@ -21,5 +21,7 @@ public:
 
 	float threshold;
 	float falloff;
+	ESelectInterpType interpType;
+	int32 numSteps;
 
 };
