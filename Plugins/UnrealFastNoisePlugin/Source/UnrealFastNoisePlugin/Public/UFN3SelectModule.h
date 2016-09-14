@@ -4,7 +4,7 @@
 #include "UFN3SelectModule.generated.h"
 
 UCLASS()
-class UUFN3SelectModule : public UUFNNoiseGenerator
+class UNREALFASTNOISEPLUGIN_API UUFN3SelectModule : public UUFNNoiseGenerator
 {
 	GENERATED_UCLASS_BODY()
 public:
