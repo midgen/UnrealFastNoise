@@ -9,7 +9,7 @@
 
 UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain, EPositionWarpType positionWarpType, float positionWarpAmplitude)
 {
-	UFastNoise* noiseGen = NewObject<UFastNoise>(outer, FName("NoiseGen"));
+	UFastNoise* noiseGen = NewObject<UFastNoise>(outer);
 
 	noiseGen->SetNoiseType(noiseType);
 	noiseGen->SetSeed(seed);
@@ -35,7 +35,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSelectModule(UObject* ou
 		return nullptr;
 	}
 
-	UUFNSelectModule* newSelectModule = NewObject<UUFNSelectModule>(outer, FName("Select"));
+	UUFNSelectModule* newSelectModule = NewObject<UUFNSelectModule>(outer);
 
 	newSelectModule->inputModule1 = inputModule1;
 	newSelectModule->inputModule2 = inputModule2;
@@ -54,7 +54,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateBlendModule(UObject* out
 		return nullptr;
 	}
 
-	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(outer, FName("Blend"));
+	UUFNBlendModule* blendModule = NewObject<UUFNBlendModule>(outer);
 
 	blendModule->inputModule1 = inputModule1;
 	blendModule->inputModule2 = inputModule2;
@@ -167,7 +167,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::Create3SelectModule(UObject* o
 		return nullptr;
 	}
 
-	UUFN3SelectModule* newSelectModule = NewObject<UUFN3SelectModule>(outer, FName("Select"));
+	UUFN3SelectModule* newSelectModule = NewObject<UUFN3SelectModule>(outer);
 
 	newSelectModule->inputModule1 = inputModule1;
 	newSelectModule->inputModule2 = inputModule2;
