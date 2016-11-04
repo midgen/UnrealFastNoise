@@ -93,9 +93,9 @@ float UUFN3SelectModule::GetNoise2D(float aX, float aY)
 
 }
 
-float UUFN3SelectModule::GetInterp2D(float aX, float aY, UUFNNoiseGenerator* input1, UUFNNoiseGenerator* input2, ESelectInterpType interpType, float alpha)
+float UUFN3SelectModule::GetInterp2D(float aX, float aY, UUFNNoiseGenerator* input1, UUFNNoiseGenerator* input2, ESelectInterpType aInterpType, float alpha)
 {
-	switch (interpType)
+	switch (aInterpType)
 	{
 	case ESelectInterpType::CircularIn:
 		return FMath::InterpCircularIn(input1->GetNoise2D(aX, aY), input2->GetNoise2D(aX, aY), alpha);
@@ -121,9 +121,9 @@ float UUFN3SelectModule::GetInterp2D(float aX, float aY, UUFNNoiseGenerator* inp
 	}
 }
 
-float UUFN3SelectModule::GetInterp3D(float aX, float aY, float aZ, UUFNNoiseGenerator* input1, UUFNNoiseGenerator* input2, ESelectInterpType interpType, float alpha)
+float UUFN3SelectModule::GetInterp3D(float aX, float aY, float aZ, UUFNNoiseGenerator* input1, UUFNNoiseGenerator* input2, ESelectInterpType aInterpType, float alpha)
 {
-	switch (interpType)
+	switch (aInterpType)
 	{
 	case ESelectInterpType::CircularIn:
 		return FMath::InterpCircularIn(input1->GetNoise3D(aX, aY, aZ), input2->GetNoise3D(aX, aY, aZ), alpha);

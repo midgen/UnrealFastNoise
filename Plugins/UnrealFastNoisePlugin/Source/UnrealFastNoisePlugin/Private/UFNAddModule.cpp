@@ -40,17 +40,17 @@ float UUFNAddModule::GetNoise2D(float aX, float aY)
 	float modifier = 1.0f;
 	if (maskModule)
 	{
-		float mask = maskModule->GetNoise2D(aX, aY, aZ);
+		float mask = maskModule->GetNoise2D(aX, aY);
 		if (mask >= threshold)
 		{
 			modifier = mask;
 		}
 		else {
-			return inputModule1->GetNoise2D(aX, aY, aZ);
+			return inputModule1->GetNoise2D(aX, aY);
 		}
 	}
 
 
-	return modifier * (inputModule1->GetNoise2D(aX, aY, aZ) + inputModule2->GetNoise2D(aX, aY, aZ));
+	return modifier * (inputModule1->GetNoise2D(aX, aY) + inputModule2->GetNoise2D(aX, aY));
 }
 
