@@ -4,12 +4,6 @@
 #include "UFNWarpModule.generated.h"
 
 
-UENUM(BlueprintType)
-enum class EWarpIterations : uint8
-{
-	One, Two
-};
-
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UUFNWarpModule : public UUFNNoiseGenerator
 {
@@ -36,7 +30,7 @@ public:
 	float Iteration2YOffset2;
 	float Iteration2ZOffset2;
 
-	TEnumAsByte<EWarpIterations> warpIterations = EWarpIterations::One;
+	EWarpIterations warpIterations;
 
 	float unitSize;
 
