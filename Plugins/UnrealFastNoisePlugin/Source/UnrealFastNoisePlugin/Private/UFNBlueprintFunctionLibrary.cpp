@@ -7,10 +7,12 @@
 #include "UFNAddModule.h"
 #include "UFNConstantModule.h"
 #include "UFNSplineGenerator.h"
+#include "UFNUberNoiseModule.h"
+#include "UFNWarpModule.h"
 #include "Classes/Components/SplineComponent.h"
 #include "UFNBlueprintFunctionLibrary.h"
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain, EPositionWarpType positionWarpType, float positionWarpAmplitude)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain)
 {
 	UFastNoise* noiseGen = NewObject<UFastNoise>(outer);
 
@@ -24,8 +26,6 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* 
 	noiseGen->SetCellularDistanceFunction(cellularDistanceFunction);
 	noiseGen->SetCellularReturnType(cellularReturnType);
 	noiseGen->SetInterp(interpolation);
-	noiseGen->SetPositionWarpAmp(positionWarpAmplitude);
-	noiseGen->SetPositionWarpType(positionWarpType);
 
 	return noiseGen;
 }
@@ -82,6 +82,27 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateScaleBiasModule(UObject*
 	return scaleBiasModule;
 }
 
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateWarpModule(UObject* outer, UUFNNoiseGenerator* inputModule, UUFNNoiseGenerator* warpModule, float multiplier)
+{
+	if (!(inputModule && outer)) {
+		return nullptr;
+	}
+
+	UUFNWarpModule* thiswarpModule = NewObject<UUFNWarpModule>(outer);
+
+	thiswarpModule->inputModule = inputModule;
+	thiswarpModule->warpModule = warpModule;
+	thiswarpModule->Iteration1XOffset = 1.6f;
+	thiswarpModule->Iteration1YOffset = 2.5f;
+	thiswarpModule->Iteration2XOffset1 = 5.7f;
+	thiswarpModule->Iteration2YOffset1 = 3.4f;
+	thiswarpModule->Iteration2XOffset2 = 2.1f;
+	thiswarpModule->Iteration2YOffset2 = 3.5f;
+	thiswarpModule->multiplier = multiplier;
+
+	return thiswarpModule;
+}
+
 UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateAddModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* maskModule, float threshold)
 {
 	if (!(outer && inputModule1 && inputModule2))
@@ -108,7 +129,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateConstantModule(UObject* 
 	return noiseGen;
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSimpleNoiseGenerator(UObject* outer, ESimpleNoiseType noiseType, int32 seed, float frequency, EInterp interpolation , EPositionWarpType positionWarpType, float positionWarpAmplitude)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSimpleNoiseGenerator(UObject* outer, ESimpleNoiseType noiseType, int32 seed, float frequency, EInterp interpolation)
 {
 	UFastNoise* noiseGen = NewObject<UFastNoise>(outer);
 
@@ -131,13 +152,11 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSimpleNoiseGenerator(UOb
 	noiseGen->SetSeed(seed);
 	noiseGen->SetFrequency(frequency);
 	noiseGen->SetInterp(interpolation);
-	noiseGen->SetPositionWarpAmp(positionWarpAmplitude);
-	noiseGen->SetPositionWarpType(positionWarpType);
 
 	return noiseGen;
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateFractalNoiseGenerator(UObject* outer, EFractalNoiseType noiseType, int32 seed, float frequency, float fractalGain, EInterp interpolation, EFractalType fractalType, int32 octaves, float lacunarity, EPositionWarpType positionWarpType, float positionWarpAmplitude)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateFractalNoiseGenerator(UObject* outer, EFractalNoiseType noiseType, int32 seed, float frequency, float fractalGain, EInterp interpolation, EFractalType fractalType, int32 octaves, float lacunarity)
 {
 	UFastNoise* noiseGen = NewObject<UFastNoise>(outer);
 
@@ -161,13 +180,11 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateFractalNoiseGenerator(UO
 	noiseGen->SetFractalGain(fractalGain);
 	noiseGen->SetFractalLacunarity(lacunarity);
 	noiseGen->SetInterp(interpolation);
-	noiseGen->SetPositionWarpAmp(positionWarpAmplitude);
-	noiseGen->SetPositionWarpType(positionWarpType);
 
 	return noiseGen;
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateCellularNoiseGenerator(UObject* outer, int32 seed, float frequency, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType, EPositionWarpType positionWarpType, float positionWarpAmplitude)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateCellularNoiseGenerator(UObject* outer, int32 seed, float frequency, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType)
 {
 	UFastNoise* noiseGen = NewObject<UFastNoise>(outer);
 
@@ -176,8 +193,6 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateCellularNoiseGenerator(U
 	noiseGen->SetFrequency(frequency);
 	noiseGen->SetCellularDistanceFunction(cellularDistanceFunction);
 	noiseGen->SetCellularReturnType(cellularReturnType);
-	noiseGen->SetPositionWarpAmp(positionWarpAmplitude);
-	noiseGen->SetPositionWarpType(positionWarpType);
 
 	return noiseGen;
 }

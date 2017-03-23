@@ -59,14 +59,13 @@ float UUFNSplineGenerator::GetNoise3D(float aX, float aY, float aZ)
 		return (LocalMinDistance - MinimumDistance) / (MaximumDistance - MinimumDistance);
 	}
 }
-
-
 float UUFNSplineGenerator::GetNoise2D(float aX, float aY)
 {
-    return GetNoise3D(aX, aY, 0.0f);
+	return GetNoise3D(aX, aY, 0.0f);
 }
 
 void UUFNSplineGenerator::AddSpline(USplineComponent* Spline)
 {
 	Splines.Add(Spline);
+	//GLog->Log(FString::Printf(TEXT("Number of Splines: %d, ID %d"), Splines.Num(), GetUniqueID()));
 }
