@@ -42,5 +42,8 @@ class UNREALFASTNOISEPLUGIN_API UUFNBlueprintFunctionLibrary : public UBlueprint
 	// Creates a Select module. Returns a value either from input1 or input 2 or input 3, depending on the value returned from the select module.
 	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise")
 	static UUFNNoiseGenerator* Create3SelectModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* inputModule3, UUFNNoiseGenerator* selectModule, float lowerThreshold = 0.0f, float upperThreshold = 0.0f, ESelectInterpType interpolationType = ESelectInterpType::None, float falloff = 0.0f, int32 steps = 4);
+	// Creates a Radial module. Returns a value either from input1 or input 2, depending on the distance from the origin. Has smooth falloff option (may be wonky)
+	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise")
+		static UUFNNoiseGenerator* CreateRadialModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, ESelectInterpType interpolationType = ESelectInterpType::None, FVector origin = FVector(0.0f), float radius = 500.f, float falloff = 0.0f, int32 steps = 4);
 
 };

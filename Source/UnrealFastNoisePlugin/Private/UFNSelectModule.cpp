@@ -53,6 +53,8 @@ float UUFNSelectModule::GetNoise3D(float aX, float aY, float aZ)
 				return FMath::InterpSinInOut(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)));
 			case ESelectInterpType::Step:
 				return FMath::InterpStep(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)), numSteps);
+			case ESelectInterpType::Linear:
+				return FMath::Lerp(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)));
 			}
 		}
 	}
@@ -111,6 +113,8 @@ float UUFNSelectModule::GetNoise2D(float aX, float aY)
 				return FMath::InterpSinInOut(inputModule2->GetNoise2D(aX, aY), inputModule1->GetNoise2D(aX, aY), (control - (threshold - falloff) / (2.0f * falloff)));
 			case ESelectInterpType::Step:
 				return FMath::InterpStep(inputModule2->GetNoise2D(aX, aY), inputModule1->GetNoise2D(aX, aY), (control - (threshold - falloff) / (2.0f * falloff)), numSteps);
+			case ESelectInterpType::Linear:
+				return FMath::Lerp(inputModule2->GetNoise2D(aX, aY), inputModule1->GetNoise2D(aX, aY), (control - (threshold - falloff) / (2.0f * falloff)));
 			}
 		}
 	}

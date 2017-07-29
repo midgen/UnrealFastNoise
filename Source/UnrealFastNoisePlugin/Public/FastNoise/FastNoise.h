@@ -89,7 +89,8 @@ enum class ESelectInterpType : uint8
 	SineIn,
 	SineOut,
 	SineInOut,
-	Step
+	Step,
+	Linear
 };
 
 

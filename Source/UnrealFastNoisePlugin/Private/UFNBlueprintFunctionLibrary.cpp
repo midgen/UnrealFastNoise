@@ -9,6 +9,7 @@
 #include "UFNSplineGenerator.h"
 #include "UFNUberNoiseModule.h"
 #include "UFNWarpModule.h"
+#include "UFNRadialModule.h"
 #include "Classes/Components/SplineComponent.h"
 #include "UFNBlueprintFunctionLibrary.h"
 
@@ -228,6 +229,25 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSplineGenerator(UObject*
 	newSplineGenerator->FalloffCurve = falloffCurve;
 
 	return newSplineGenerator;
+}
+
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateRadialModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, ESelectInterpType interpolationType, FVector origin, float radius, float falloff, int32 numSteps)
+{
+	if (!(inputModule1 && inputModule2  && outer)) {
+		return nullptr;
+	}
+
+	UUFNRadialModule* newRadialModule = NewObject<UUFNRadialModule>(outer);
+
+	newRadialModule->inputModule1 = inputModule1;
+	newRadialModule->inputModule2 = inputModule2;	
+	newRadialModule->falloff = falloff;
+	newRadialModule->radius = radius;
+	newRadialModule->origin = origin;
+	newRadialModule->interpType = interpolationType;
+	newRadialModule->numSteps = numSteps;
+
+	return newRadialModule;
 }
 
 UUFNBlueprintFunctionLibrary::UUFNBlueprintFunctionLibrary(const class FObjectInitializer& obj)
