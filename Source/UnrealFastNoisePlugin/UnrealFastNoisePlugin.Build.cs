@@ -4,8 +4,8 @@ using UnrealBuildTool;
 
 public class UnrealFastNoisePlugin : ModuleRules
 {
-	public UnrealFastNoisePlugin(TargetInfo Target)
-	{
+	public UnrealFastNoisePlugin(ReadOnlyTargetRules Target) : base(Target)
+    {
         
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"  });
     
