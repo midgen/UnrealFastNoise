@@ -29,7 +29,7 @@
 // 
 
 #pragma once
-#include "UnrealFastNoisePlugin.h"
+#include "CoreMinimal.h"
 #include "Object.h"
 #include "UFNNoiseGenerator.h"
 #include "FastNoise.generated.h"

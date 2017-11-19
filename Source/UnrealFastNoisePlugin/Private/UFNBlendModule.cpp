@@ -1,7 +1,6 @@
-
-#include "UnrealFastNoisePlugin.h"
-#include "UFNNoiseGenerator.h"
 #include "UFNBlendModule.h"
+#include "UFNNoiseGenerator.h"
+
 
 UUFNBlendModule::UUFNBlendModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

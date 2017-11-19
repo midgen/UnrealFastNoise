@@ -1,7 +1,6 @@
-
-#include "UnrealFastNoisePlugin.h"
-#include "UFNNoiseGenerator.h"
 #include "UFNConstantModule.h"
+#include "UFNNoiseGenerator.h"
+
 
 UUFNConstantModule::UUFNConstantModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

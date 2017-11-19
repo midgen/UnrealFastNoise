@@ -1,6 +1,7 @@
 #pragma once
 
 #include "UFNNoiseGenerator.h"
+#include "CoreMinimal.h"
 #include "UFNAddModule.generated.h"
 
 UCLASS()

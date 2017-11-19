@@ -1,7 +1,6 @@
-
-#include "UnrealFastNoisePlugin.h"
-#include "UFNNoiseGenerator.h"
 #include "UFNScaleBiasModule.h"
+#include "UFNNoiseGenerator.h"
+
 
 UUFNScaleBiasModule::UUFNScaleBiasModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

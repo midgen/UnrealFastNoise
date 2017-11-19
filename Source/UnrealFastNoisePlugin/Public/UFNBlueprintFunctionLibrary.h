@@ -1,6 +1,8 @@
 #pragma once
 // Copyright 1998-2013 Epic Games, Inc. All Rights Reserved.
 #include "FastNoise/FastNoise.h"
+#include "CoreMinimal.h"
+#include "UnrealFastNoisePlugin.h"
 #include "UFNBlueprintFunctionLibrary.generated.h"
 
 UCLASS()

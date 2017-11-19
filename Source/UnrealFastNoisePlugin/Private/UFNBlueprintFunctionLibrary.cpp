@@ -1,4 +1,4 @@
-#include "UnrealFastNoisePlugin.h"
+#include "UFNBlueprintFunctionLibrary.h"
 #include "FastNoise/FastNoise.h"
 #include "UFNSelectModule.h"
 #include "UFN3SelectModule.h"
@@ -7,11 +7,10 @@
 #include "UFNAddModule.h"
 #include "UFNConstantModule.h"
 #include "UFNSplineGenerator.h"
-#include "UFNUberNoiseModule.h"
 #include "UFNWarpModule.h"
 #include "UFNRadialModule.h"
 #include "Classes/Components/SplineComponent.h"
-#include "UFNBlueprintFunctionLibrary.h"
+
 
 UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain)
 {

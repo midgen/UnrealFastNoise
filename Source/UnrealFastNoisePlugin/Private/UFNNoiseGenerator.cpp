@@ -1,5 +1,5 @@
-#include "UnrealFastNoisePlugin.h"
 #include "UFNNoiseGenerator.h"
+
 
 UUFNNoiseGenerator::UUFNNoiseGenerator(const class FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

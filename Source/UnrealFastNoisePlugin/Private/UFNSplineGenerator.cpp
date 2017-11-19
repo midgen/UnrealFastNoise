@@ -1,7 +1,7 @@
-#include "UnrealFastNoisePlugin.h"
+#include "UFNSplineGenerator.h"
 #include "UFNNoiseGenerator.h"
 #include "Classes/Components/SplineComponent.h"
-#include "UFNSplineGenerator.h"
+
 
 UUFNSplineGenerator::UUFNSplineGenerator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

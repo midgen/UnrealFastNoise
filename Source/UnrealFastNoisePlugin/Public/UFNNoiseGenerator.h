@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "CoreMinimal.h"
 #include "UFNNoiseGenerator.generated.h"
 
 UCLASS(BlueprintType)
