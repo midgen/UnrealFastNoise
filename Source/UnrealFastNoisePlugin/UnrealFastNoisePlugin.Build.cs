@@ -5,26 +5,27 @@ using UnrealBuildTool;
 public class UnrealFastNoisePlugin : ModuleRules
 {
 	public UnrealFastNoisePlugin(ReadOnlyTargetRules Target) : base(Target)
-    {
-        
+	{
+		
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore"  });
 
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		bEnforceIWYU = false;
 
-        // Uncomment if you are using Slate UI
-        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+		// Uncomment if you are using Slate UI
+		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 
-        // Uncomment if you are using online features
-        // PrivateDependencyModuleNames.Add("OnlineSubsystem");
-        // if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
-        // {
-        //		if (UEBuildConfiguration.bCompileSteamOSS == true)
-        //		{
-        //			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
-        //		}
-        // }
+		// Uncomment if you are using online features
+		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
+		// if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
+		// {
+		//		if (UEBuildConfiguration.bCompileSteamOSS == true)
+		//		{
+		//			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
+		//		}
+		// }
 
-    }
+	}
 
 
 }
