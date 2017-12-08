@@ -49,7 +49,7 @@ float UUFNSelectModule::GetNoise3D(float aX, float aY, float aZ)
 			case ESelectInterpType::SineInOut:
 				return FMath::InterpSinInOut(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)));
 			case ESelectInterpType::SineOut:
-				return FMath::InterpSinInOut(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)));
+				return FMath::InterpSinOut(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)));
 			case ESelectInterpType::Step:
 				return FMath::InterpStep(inputModule2->GetNoise3D(aX, aY, aZ), inputModule1->GetNoise3D(aX, aY, aZ), (control - (threshold - falloff) / (2.0f * falloff)), numSteps);
 			case ESelectInterpType::Linear:
