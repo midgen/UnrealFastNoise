@@ -9,6 +9,7 @@
 #include "UFNSplineGenerator.h"
 #include "UFNWarpModule.h"
 #include "UFNRadialModule.h"
+#include "UFNShoreFilterModule.h"
 #include "Classes/Components/SplineComponent.h"
 
 
@@ -247,6 +248,21 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateRadialModule(UObject* ou
 	newRadialModule->numSteps = numSteps;
 
 	return newRadialModule;
+}
+
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateShoreFilterModule(UObject* outer, UUFNNoiseGenerator* inputModule1, const float shoreHeight, const float threshold)
+{
+	if (!(inputModule1 && outer)) {
+		return nullptr;
+	}
+
+	UUFNShoreFilterModule* newShoreFilterModule = NewObject<UUFNShoreFilterModule>(outer);
+
+	newShoreFilterModule->myInputModule = inputModule1;
+	newShoreFilterModule->myShoreHeight = shoreHeight;
+	newShoreFilterModule->myThreshhold = threshold;
+
+	return newShoreFilterModule;
 }
 
 UUFNBlueprintFunctionLibrary::UUFNBlueprintFunctionLibrary(const class FObjectInitializer& obj)
