@@ -1,5 +1,7 @@
 # UnrealFastNoise
-Modular, Blueprint-friendly noise generation for UE4
+### Modular, Blueprint-friendly noise generation for UE4
+
+Consists of a wrapper and blueprint utility functions around noise generation code from https://github.com/Auburns/FastNoise.
 
 Provides a modular system for mixing noise generators in Blueprint. 
 
