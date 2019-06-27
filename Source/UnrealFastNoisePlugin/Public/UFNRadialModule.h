@@ -20,8 +20,8 @@ public:
 	UUFNNoiseGenerator* inputModule2;
 
 	FVector origin;
-	float radius;
-	float falloff;
+	float radius2;
+	float falloff2;
 
 	ESelectInterpType interpType;
 	int32 numSteps;

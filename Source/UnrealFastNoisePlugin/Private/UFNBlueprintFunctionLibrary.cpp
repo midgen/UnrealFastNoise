@@ -241,8 +241,8 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateRadialModule(UObject* ou
 
 	newRadialModule->inputModule1 = inputModule1;
 	newRadialModule->inputModule2 = inputModule2;	
-	newRadialModule->falloff = falloff;
-	newRadialModule->radius = radius;
+	newRadialModule->falloff2 = falloff * falloff;
+	newRadialModule->radius2 = radius * radius;
 	newRadialModule->origin = origin;
 	newRadialModule->interpType = interpolationType;
 	newRadialModule->numSteps = numSteps;
