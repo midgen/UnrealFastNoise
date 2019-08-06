@@ -75,7 +75,7 @@ enum ECellularDistanceFunction { Euclidean, Manhattan, Natural };
 UENUM(BlueprintType)
 enum ECellularReturnType { CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div};
 UENUM(BlueprintType)
-enum EPositionWarpType { None, Regular, Fractal };
+enum class EPositionWarpType : uint8 { None, Regular, Fractal };
 UENUM(BlueprintType)
 enum class ESelectInterpType : uint8
 {
