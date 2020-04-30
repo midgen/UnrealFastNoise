@@ -10,7 +10,7 @@
 #include "UFNWarpModule.h"
 #include "UFNRadialModule.h"
 #include "UFNShoreFilterModule.h"
-#include "Classes/Components/SplineComponent.h"
+#include "Components/SplineComponent.h"
 
 
 UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType , EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain)

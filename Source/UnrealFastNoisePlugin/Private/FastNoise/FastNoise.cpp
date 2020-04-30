@@ -26,7 +26,7 @@
 // off every 'zix'.)
 //
 
-#include "FastNoise.h"
+#include "FastNoise/FastNoise.h"
 #include "UnrealFastNoisePlugin.h"
 
 #include <math.h>

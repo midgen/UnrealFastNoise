@@ -1,6 +1,6 @@
 #include "UFNSplineGenerator.h"
 #include "UFNNoiseGenerator.h"
-#include "Classes/Components/SplineComponent.h"
+#include "Components/SplineComponent.h"
 
 
 UUFNSplineGenerator::UUFNSplineGenerator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)

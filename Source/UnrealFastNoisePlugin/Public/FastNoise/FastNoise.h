@@ -30,7 +30,7 @@
 
 #pragma once
 #include "CoreMinimal.h"
-#include "Object.h"
+#include "UObject/Object.h"
 #include "UFNNoiseGenerator.h"
 #include "FastNoise.generated.h"
 
