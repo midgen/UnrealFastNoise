@@ -1,24 +1,25 @@
 #pragma once
 
-#include "UFNNoiseGenerator.h"
-#include "CoreMinimal.h"
-#include "UFNWarpModule.generated.h"
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
 
+#include "UFNWarpModule.generated.h"
 
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UUFNWarpModule : public UUFNNoiseGenerator
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 public:
+	UUFNWarpModule(const FObjectInitializer& ObjectInitializer);
 
-	float GetNoise3D(float aX, float aY, float aZ) override;
-	float GetNoise2D(float aX, float aY) override;
+
+	float GetNoise3D(float InX, float InY, float InZ) override;
+	float GetNoise2D(float InX, float InY) override;
 
 	UPROPERTY()
-	UUFNNoiseGenerator* inputModule;
+	UUFNNoiseGenerator* InputModule;
 
 	UPROPERTY()
-	UUFNNoiseGenerator* warpModule;
+	UUFNNoiseGenerator* WarpModule;
 
 	float Iteration1XOffset;
 	float Iteration1YOffset;
@@ -31,10 +32,9 @@ public:
 	float Iteration2YOffset2;
 	float Iteration2ZOffset2;
 
-	EWarpIterations warpIterations;
+	EWarpIterations WarpIterations;
 
-	float unitSize;
+	float UnitSize;
 
-	float multiplier;
-
+	float Multiplier;
 };

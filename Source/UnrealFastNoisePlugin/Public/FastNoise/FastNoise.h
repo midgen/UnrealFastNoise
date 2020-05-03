@@ -29,9 +29,10 @@
 // 
 
 #pragma once
-#include "CoreMinimal.h"
-#include "Object.h"
-#include "UFNNoiseGenerator.h"
+
+#include <Runtime/CoreUObject/Public/UObject/Object.h>
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
+
 #include "FastNoise.generated.h"
 
 UENUM(BlueprintType)
@@ -97,9 +98,9 @@ enum class ESelectInterpType : uint8
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UFastNoise : public UUFNNoiseGenerator
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 public:
-	//FastNoise(int seed = 1337) { SetSeed(seed);  };
+	UFastNoise(const FObjectInitializer& InIntializer);
 	~UFastNoise() { delete m_cellularNoiseLookup; }
 
 	// Returns seed used for all noise types
@@ -240,19 +241,19 @@ public:
 		return 0.0f;
 	}
 }
-	FORCEINLINE float GetNoise2D(float x, float y)
+	FORCEINLINE float GetNoise2D(float InX, float InY)
 {
 	switch (m_positionWarpType)
 	{
 	default:
 	case EPositionWarpType::None:
-		return GetNoise(x, y);
+		return GetNoise(InX, InY);
 	case EPositionWarpType::Fractal:
-		PositionWarpFractal(x, y);
-		return GetNoise(x, y);
+		PositionWarpFractal(InX, InY);
+		return GetNoise(InX, InY);
 	case EPositionWarpType::Regular:
-		PositionWarp(x, y);
-		return GetNoise(x, y);
+		PositionWarp(InX, InY);
+		return GetNoise(InX, InY);
 	}
 }
 
@@ -370,19 +371,19 @@ public:
 		return 0.0f;
 	}
 }
-	FORCEINLINE float GetNoise3D(float x, float y, float z)
+	FORCEINLINE float GetNoise3D(float InX, float InY, float InZ)
 {
 	switch (m_positionWarpType)
 	{
 	default:
 	case EPositionWarpType::None:
-		return GetNoise(x, y, z);
+		return GetNoise(InX, InY, InZ);
 	case EPositionWarpType::Fractal:
-		PositionWarpFractal(x, y, z);
-		return GetNoise(x, y, z);
+		PositionWarpFractal(InX, InY, InZ);
+		return GetNoise(InX, InY, InZ);
 	case EPositionWarpType::Regular:
-		PositionWarp(x, y, z);
-		return GetNoise(x, y, z);
+		PositionWarp(InX, InY, InZ);
+		return GetNoise(InX, InY, InZ);
 	}
 }
 

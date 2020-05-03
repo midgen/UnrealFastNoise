@@ -1,22 +1,22 @@
 #pragma once
 
-#include "UFNNoiseGenerator.h"
-#include "CoreMinimal.h"
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
+
 #include "UFNShoreFilterModule.generated.h"
 
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UUFNShoreFilterModule : public UUFNNoiseGenerator
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 public:
+	UUFNShoreFilterModule(const FObjectInitializer& ObjectInitializer);
 
-	float GetNoise3D(float aX, float aY, float aZ) override;
-	float GetNoise2D(float aX, float aY) override;
+	float GetNoise3D(float InX, float InY, float InZ) override;
+	float GetNoise2D(float InX, float InY) override;
 
 	UPROPERTY()
-		UUFNNoiseGenerator* myInputModule;
+	UUFNNoiseGenerator* InputModule;
 
-	float myShoreHeight;
-	float myThreshhold;
-
+	float ShoreHeight;
+	float Threshhold;
 };

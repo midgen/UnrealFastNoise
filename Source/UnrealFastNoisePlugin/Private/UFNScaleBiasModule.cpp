@@ -1,27 +1,29 @@
-#include "UFNScaleBiasModule.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNScaleBiasModule.h"
 
-
-UUFNScaleBiasModule::UUFNScaleBiasModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNScaleBiasModule::UUFNScaleBiasModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule(nullptr)
+	, Scale(1.0f)
+	, Bias(0.f)
 {
-
 }
 
-float UUFNScaleBiasModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFNScaleBiasModule::GetNoise3D(float InX, float InY, float InZ)
 {
-	if (!(inputModule)) {
+	if (!(InputModule))
+	{
 		return 0.0f;
 	}
 
-	return (inputModule->GetNoise3D(aX, aY, aZ) * scale) + bias;
+	return (InputModule->GetNoise3D(InX, InY, InZ) * Scale) + Bias;
 }
 
-float UUFNScaleBiasModule::GetNoise2D(float aX, float aY)
+float UUFNScaleBiasModule::GetNoise2D(float InX, float InY)
 {
-	if (!(inputModule)) {
+	if (!(InputModule))
+	{
 		return 0.0f;
 	}
 
-	return (inputModule->GetNoise2D(aX, aY) * scale) + bias;
+	return (InputModule->GetNoise2D(InX, InY) * Scale) + Bias;
 }
-

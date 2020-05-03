@@ -1,8 +1,8 @@
 #pragma once
 // Copyright 1998-2013 Epic Games, Inc. All Rights Reserved.
-#include "FastNoise/FastNoise.h"
-#include "CoreMinimal.h"
-#include "UnrealFastNoisePlugin.h"
+#include "UnrealFastNoisePlugin/Public/FastNoise/FastNoise.h"
+#include "UnrealFastNoisePlugin/Public/UnrealFastNoisePlugin.h"
+
 #include "UFNBlueprintFunctionLibrary.generated.h"
 
 UCLASS()
@@ -46,9 +46,8 @@ class UNREALFASTNOISEPLUGIN_API UUFNBlueprintFunctionLibrary : public UBlueprint
 	static UUFNNoiseGenerator* Create3SelectModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* inputModule3, UUFNNoiseGenerator* selectModule, float lowerThreshold = 0.0f, float upperThreshold = 0.0f, ESelectInterpType interpolationType = ESelectInterpType::None, float falloff = 0.0f, int32 steps = 4);
 	// Creates a Radial module. Returns a value either from input1 or input 2, depending on the distance from the origin. Has smooth falloff option (may be wonky)
 	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise")
-		static UUFNNoiseGenerator* CreateRadialModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, ESelectInterpType interpolationType = ESelectInterpType::None, FVector origin = FVector(0.0f), float radius = 500.f, float falloff = 0.0f, int32 steps = 4);
+	static UUFNNoiseGenerator* CreateRadialModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, ESelectInterpType interpolationType = ESelectInterpType::None, FVector origin = FVector(0.0f), float radius = 500.f, float falloff = 0.0f, int32 steps = 4);
 	// Creates a Shore Filters module. Adjusts terrain near water level to encourage smooth beach like features.
 	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise")
-		static UUFNNoiseGenerator* CreateShoreFilterModule(UObject* outer, UUFNNoiseGenerator* inputModule1, const float shoreHeight, const float threshold);
-
+	static UUFNNoiseGenerator* CreateShoreFilterModule(UObject* outer, UUFNNoiseGenerator* inputModule1, const float shoreHeight, const float threshold);
 };

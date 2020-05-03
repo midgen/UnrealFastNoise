@@ -1,40 +1,40 @@
-#include "UFNAddModule.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNAddModule.h"
 
-
-UUFNAddModule::UUFNAddModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNAddModule::UUFNAddModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule1(nullptr)
+	, InputModule2(nullptr)
+	, MaskModule(nullptr)
+	, Threshold(0.f)
 {
-	threshold = 0.0f;
 }
 
-float UUFNAddModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFNAddModule::GetNoise3D(float InX, float InY, float InZ)
 {
 
-	if (!(inputModule1 || inputModule2)) {
+	if (!(InputModule1 || InputModule2))
+	{
 		return 0.0f;
 	}
 
-	float modifier = 1.0f;
-	if (maskModule)
+	float Modifier = 1.0f;
+	if (MaskModule)
 	{
-		float mask = maskModule->GetNoise3D(aX, aY, aZ);
-		if (mask >= threshold)
+		float Mask = MaskModule->GetNoise3D(InX, InY, InZ);
+		if (Mask >= Threshold)
 		{
-			modifier = mask;
+			Modifier = Mask;
 		}
-		else {
-			return inputModule1->GetNoise3D(aX, aY, aZ);
+		else
+		{
+			return InputModule1->GetNoise3D(InX, InY, InZ);
 		}
 	}
 
-
-	return modifier * (inputModule1->GetNoise3D(aX, aY, aZ) + inputModule2->GetNoise3D(aX, aY, aZ));
-
-
+	return Modifier * (InputModule1->GetNoise3D(InX, InY, InZ) + InputModule2->GetNoise3D(InX, InY, InZ));
 }
 
-float UUFNAddModule::GetNoise2D(float aX, float aY)
+float UUFNAddModule::GetNoise2D(float InX, float InY)
 {
-	return GetNoise3D(aX, aY, 0.0f);
+	return GetNoise3D(InX, InY, 0.0f);
 }
-

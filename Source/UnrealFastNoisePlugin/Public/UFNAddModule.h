@@ -1,23 +1,24 @@
 #pragma once
 
-#include "UFNNoiseGenerator.h"
-#include "CoreMinimal.h"
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
+
 #include "UFNAddModule.generated.h"
 
 UCLASS()
-class UUFNAddModule : public UUFNNoiseGenerator
+class UNREALFASTNOISEPLUGIN_API UUFNAddModule : public UUFNNoiseGenerator
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 public:
+	UUFNAddModule(const FObjectInitializer& ObjectInitializer);
 
-	float GetNoise3D(float aX, float aY, float aZ) override;
-	float GetNoise2D(float aX, float aY) override;
+	float GetNoise3D(float InX, float InY, float InZ) override;
+	float GetNoise2D(float InX, float InY) override;
 	UPROPERTY()
-	UUFNNoiseGenerator* inputModule1;
+	UUFNNoiseGenerator* InputModule1;
 	UPROPERTY()
-	UUFNNoiseGenerator* inputModule2;
+	UUFNNoiseGenerator* InputModule2;
 	UPROPERTY()
-	UUFNNoiseGenerator* maskModule;
+	UUFNNoiseGenerator* MaskModule;
 
-	float threshold;
+	float Threshold;
 };

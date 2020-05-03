@@ -1,30 +1,34 @@
-#include "UFNSplineGenerator.h"
-#include "UFNNoiseGenerator.h"
-#include "Classes/Components/SplineComponent.h"
+#include "UnrealFastNoisePlugin/Public/UFNSplineGenerator.h"
 
+#include <Runtime/Engine/Classes/Components/SplineComponent.h>
 
-UUFNSplineGenerator::UUFNSplineGenerator(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNSplineGenerator::UUFNSplineGenerator(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, MaximumDistance(0.f)
+	, MinimumDistance(0.f)
+	, FalloffCurve(nullptr)
 {
 }
 
-float UUFNSplineGenerator::GetNoise3D(float aX, float aY, float aZ)
+float UUFNSplineGenerator::GetNoise3D(float InX, float InY, float InZ)
 {
 	float LocalMinDistance = MaximumDistance;
-	FVector WorldPoint = FVector(aX, aY, aZ);
+	FVector WorldPoint = FVector(InX, InY, InZ);
 	for (auto Spline : Splines)
 	{
 		// May need the InputKey later, so instead of finding location, find input key to prevent multiple searches
 		float InputKey = Spline->FindInputKeyClosestToWorldLocation(WorldPoint);
 		FVector PointOnSpline = Spline->GetLocationAtSplineInputKey(InputKey, ESplineCoordinateSpace::World);
 
-		float Distance = FVector::Dist(FVector(aX, aY, 0.0f), PointOnSpline);
+		float Distance = FVector::Dist(FVector(InX, InY, 0.0f), PointOnSpline);
 
 		// If we are inside a spline's width, distance from other splines is irrelevant so we can return early
 		if (Distance < MinimumDistance)
 		{
 			return 0.0f;
 		}
-		else {
+		else
+		{
 			LocalMinDistance = Distance < LocalMinDistance ? Distance : LocalMinDistance;
 			/*
 			This is not implemented
@@ -47,7 +51,6 @@ float UUFNSplineGenerator::GetNoise3D(float aX, float aY, float aZ)
 				return 0.0f;
 			}
 			*/
-
 		}
 	}
 
@@ -55,13 +58,14 @@ float UUFNSplineGenerator::GetNoise3D(float aX, float aY, float aZ)
 	{
 		return FalloffCurve->GetFloatValue((LocalMinDistance - MinimumDistance) / (MaximumDistance - MinimumDistance));
 	}
-	else {
+	else
+	{
 		return (LocalMinDistance - MinimumDistance) / (MaximumDistance - MinimumDistance);
 	}
 }
-float UUFNSplineGenerator::GetNoise2D(float aX, float aY)
+float UUFNSplineGenerator::GetNoise2D(float InX, float InY)
 {
-	return GetNoise3D(aX, aY, 0.0f);
+	return GetNoise3D(InX, InY, 0.0f);
 }
 
 void UUFNSplineGenerator::AddSpline(USplineComponent* Spline)

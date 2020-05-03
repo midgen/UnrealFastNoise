@@ -1,42 +1,46 @@
-#include "UFNBlendModule.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNBlendModule.h"
 
-
-UUFNBlendModule::UUFNBlendModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNBlendModule::UUFNBlendModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule1(nullptr)
+	, InputModule2(nullptr)
+	, SelectModule(nullptr)
+	, BlendCurve(nullptr)
+	, Falloff(0.f)
 {
-
 }
 
-float UUFNBlendModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFNBlendModule::GetNoise3D(float InX, float InY, float InZ)
 {
 
-	if (!(inputModule1 && inputModule2 && selectModule)) {
+	if (!(InputModule1 && InputModule2 && SelectModule))
+	{
 		return 0.0f;
 	}
 
-	float control = (selectModule->GetNoise3D(aX, aY, aZ) + 1.0f) / 2.0f;
+	float Control = (SelectModule->GetNoise3D(InX, InY, InZ) + 1.0f) / 2.0f;
 
-	if (blendCurve)
+	if (BlendCurve)
 	{
-		control = blendCurve->GetFloatValue(control);
+		Control = BlendCurve->GetFloatValue(Control);
 	}
 
-	return FMath::Lerp(inputModule1->GetNoise3D(aX, aY, aZ), inputModule2->GetNoise3D(aX, aY, aZ), control);
+	return FMath::Lerp(InputModule1->GetNoise3D(InX, InY, InZ), InputModule2->GetNoise3D(InX, InY, InZ), Control);
 }
 
-float UUFNBlendModule::GetNoise2D(float aX, float aY)
+float UUFNBlendModule::GetNoise2D(float InX, float InY)
 {
-	if (!(inputModule1 && inputModule2 && selectModule)) {
+	if (!(InputModule1 && InputModule2 && SelectModule))
+	{
 		return 0.0f;
 	}
 
-	float control = (selectModule->GetNoise2D(aX, aY) + 1.0f) / 2.0f;
+	float Control = (SelectModule->GetNoise2D(InX, InY) + 1.0f) / 2.0f;
 
-	if (blendCurve)
+	if (BlendCurve)
 	{
-		control = blendCurve->GetFloatValue(control);
+		Control = BlendCurve->GetFloatValue(Control);
 	}
 
-	return FMath::Lerp(inputModule1->GetNoise2D(aX, aY), inputModule2->GetNoise2D(aX, aY), control);
+	return FMath::Lerp(InputModule1->GetNoise2D(InX, InY), InputModule2->GetNoise2D(InX, InY), Control);
 }
-

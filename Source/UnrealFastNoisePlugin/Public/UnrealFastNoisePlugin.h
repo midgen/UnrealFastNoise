@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include "ModuleManager.h"
+#include <Runtime/Core/Public/Modules/ModuleManager.h>
 
-#define Msg(Text) if(GEngine) GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT(Text));
+#define Msg(Text) \
+	if (GEngine)  \
+		GEngine->AddOnScreenDebugMessage(-1, 1, FColor::Green, TEXT(Text));
 
 class FUnrealFastNoisePlugin : public IModuleInterface
 {
 public:
-
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
@@ -18,5 +19,6 @@ public:
 UENUM(BlueprintType)
 enum class EWarpIterations : uint8
 {
-	One, Two
+	One,
+	Two
 };

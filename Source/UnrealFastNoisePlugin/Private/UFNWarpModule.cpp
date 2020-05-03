@@ -1,55 +1,65 @@
-#include "UFNWarpModule.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNWarpModule.h"
 
-
-UUFNWarpModule::UUFNWarpModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNWarpModule::UUFNWarpModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule(nullptr)
+	, WarpModule(nullptr)
+	, Iteration1XOffset(0.f)
+	, Iteration1YOffset(0.f)
+	, Iteration1ZOffset(0.f) 
+	, Iteration2XOffset1(0.f)
+	, Iteration2YOffset1(0.f)
+	, Iteration2ZOffset1(0.f)
+	, Iteration2XOffset2(0.f)
+	, Iteration2YOffset2(0.f)
+	, Iteration2ZOffset2(0.f)
+	, WarpIterations(EWarpIterations::One)
+	, UnitSize(0.f)
+	, Multiplier(0.f)
 {
-
 }
 
-float UUFNWarpModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFNWarpModule::GetNoise3D(float InX, float InY, float InZ)
 {
-	if (!(inputModule)) {
+	if (!(InputModule))
+	{
 		return 0.0f;
 	}
 
-	FVector p = FVector(aX, aY, aZ);
+	FVector p = FVector(InX, InY, InZ);
 
-	FVector q = FVector(warpModule->GetNoise3D(p.X, p.Y, p.Z), warpModule->GetNoise3D(p.X + Iteration1XOffset, p.Y + Iteration1YOffset, p.Z + Iteration1ZOffset), warpModule->GetNoise3D(p.X + Iteration1XOffset + 0.5f, p.Y + Iteration1YOffset + 0.5f, p.Z + Iteration1ZOffset + 2.4f));
+	FVector q = FVector(WarpModule->GetNoise3D(p.X, p.Y, p.Z), WarpModule->GetNoise3D(p.X + Iteration1XOffset, p.Y + Iteration1YOffset, p.Z + Iteration1ZOffset), WarpModule->GetNoise3D(p.X + Iteration1XOffset + 0.5f, p.Y + Iteration1YOffset + 0.5f, p.Z + Iteration1ZOffset + 2.4f));
 
-	if (warpIterations == EWarpIterations::One)
+	if (WarpIterations == EWarpIterations::One)
 	{
-		return (inputModule->GetNoise3D(p.X + (multiplier * q.X), p.Y + (multiplier * q.Y), p.Z + (multiplier * q.Z)));
+		return (InputModule->GetNoise3D(p.X + (Multiplier * q.X), p.Y + (Multiplier * q.Y), p.Z + (Multiplier * q.Z)));
 	}
 
+	FVector r = FVector(WarpModule->GetNoise3D((p.X + (Multiplier * q).X) + Iteration2XOffset1, (p.Y + (Multiplier * q).Y) + Iteration2YOffset1, (p.Z + (Multiplier * q).Z) + Iteration2ZOffset1),
+		WarpModule->GetNoise3D((p.X + (Multiplier * q).X) + Iteration2XOffset2, (p.Y + (Multiplier * q).Y) + Iteration2YOffset2, (p.Z + (Multiplier * q).Z) + Iteration2ZOffset2),
+		WarpModule->GetNoise3D((p.X + (Multiplier * q).X + 3.4f) + Iteration2XOffset2, (p.Y + (Multiplier * q).Y) + Iteration2YOffset2 + 4.6f, (p.Z + (Multiplier * q).Z) + Iteration2ZOffset2) + 2.3f);
 
-	FVector r = FVector(warpModule->GetNoise3D((p.X + (multiplier * q).X) + Iteration2XOffset1, (p.Y + (multiplier * q).Y) + Iteration2YOffset1, (p.Z + (multiplier * q).Z) + Iteration2ZOffset1),
-		warpModule->GetNoise3D((p.X + (multiplier * q).X) + Iteration2XOffset2, (p.Y + (multiplier * q).Y) + Iteration2YOffset2, (p.Z + (multiplier * q).Z) + Iteration2ZOffset2),
-		warpModule->GetNoise3D((p.X + (multiplier * q).X + 3.4f) + Iteration2XOffset2, (p.Y + (multiplier * q).Y) + Iteration2YOffset2 + 4.6f, (p.Z + (multiplier * q).Z) + Iteration2ZOffset2) + 2.3f);
-
-	return (inputModule->GetNoise3D(p.X + (multiplier * r.X), p.Y + (multiplier * r.Y), p.Z + (multiplier * r.Z)));
+	return (InputModule->GetNoise3D(p.X + (Multiplier * r.X), p.Y + (Multiplier * r.Y), p.Z + (Multiplier * r.Z)));
 }
 
-float UUFNWarpModule::GetNoise2D(float aX, float aY)
+float UUFNWarpModule::GetNoise2D(float InX, float InY)
 {
-	if ((!(inputModule)) || !warpModule) {
+	if ((!(InputModule)) || !WarpModule)
+	{
 		return 0.0f;
 	}
 
-	FVector2D p = FVector2D(aX, aY);
+	FVector2D p = FVector2D(InX, InY);
 
-	FVector2D q = FVector2D(warpModule->GetNoise2D(p.X, p.Y), warpModule->GetNoise2D(p.X + Iteration1XOffset, p.Y + Iteration1YOffset));
+	FVector2D q = FVector2D(WarpModule->GetNoise2D(p.X, p.Y), WarpModule->GetNoise2D(p.X + Iteration1XOffset, p.Y + Iteration1YOffset));
 
-	if (warpIterations == EWarpIterations::One)
+	if (WarpIterations == EWarpIterations::One)
 	{
-		return (inputModule->GetNoise2D(p.X + (multiplier * q.X), p.Y + (multiplier * q.Y)));
+		return (InputModule->GetNoise2D(p.X + (Multiplier * q.X), p.Y + (Multiplier * q.Y)));
 	}
-	
 
-	FVector2D r = FVector2D(warpModule->GetNoise2D((p.X + (multiplier * q).X) + Iteration2XOffset1, (p.Y + (multiplier * q).Y) + Iteration2YOffset1),
-		warpModule->GetNoise2D((p.X + (multiplier * q).X) + Iteration2XOffset2, (p.Y + (multiplier * q).Y) + Iteration2YOffset2));
+	FVector2D r = FVector2D(WarpModule->GetNoise2D((p.X + (Multiplier * q).X) + Iteration2XOffset1, (p.Y + (Multiplier * q).Y) + Iteration2YOffset1),
+		WarpModule->GetNoise2D((p.X + (Multiplier * q).X) + Iteration2XOffset2, (p.Y + (Multiplier * q).Y) + Iteration2YOffset2));
 
-	return (inputModule->GetNoise2D(p.X + (multiplier * r.X), p.Y + (multiplier * r.Y)));
-
+	return (InputModule->GetNoise2D(p.X + (Multiplier * r.X), p.Y + (Multiplier * r.Y)));
 }
-

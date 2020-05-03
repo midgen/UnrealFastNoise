@@ -1,6 +1,6 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 
-#include "UnrealFastNoisePlugin.h"
+#include "UnrealFastNoisePlugin/Public/UnrealFastNoisePlugin.h"
 
 #define LOCTEXT_NAMESPACE "FUnrealFastNoisePlugin"
 

@@ -1,37 +1,34 @@
-#include "UFNShoreFilterModule.h"
-#include "UnrealFastNoisePlugin.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNShoreFilterModule.h"
 
-
-UUFNShoreFilterModule::UUFNShoreFilterModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFNShoreFilterModule::UUFNShoreFilterModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule(nullptr)
+	, ShoreHeight(0.f)
+	, Threshhold(0.f)
 {
-
 }
 
-float UUFNShoreFilterModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFNShoreFilterModule::GetNoise3D(float InX, float InY, float InZ)
 {
 	// This is only useful for 2D noise
 	return -1.0f;
-	
-
 }
 
-float UUFNShoreFilterModule::GetNoise2D(float aX, float aY)
+float UUFNShoreFilterModule::GetNoise2D(float InX, float InY)
 {
-	if (!(myInputModule)) {
+	if (!(InputModule))
+	{
 		return 0.0f;
 	}
 
-	float startValue = myInputModule->GetNoise2D(aX, aY);
+	float StartValue = InputModule->GetNoise2D(InX, InY);
 
-	if (startValue >= myShoreHeight + myThreshhold || startValue <= myShoreHeight - myThreshhold)
+	if (StartValue >= ShoreHeight + Threshhold || StartValue <= ShoreHeight - Threshhold)
 	{
-		return startValue;
+		return StartValue;
 	}
 
-	float alpha = (startValue + myThreshhold) / (myThreshhold * 2);
+	float Alpha = (StartValue + Threshhold) / (Threshhold * 2);
 
-	return FMath::InterpSinInOut(startValue, 0.0f, 1.0f - alpha );
-
+	return FMath::InterpSinInOut(StartValue, 0.0f, 1.0f - Alpha);
 }
-

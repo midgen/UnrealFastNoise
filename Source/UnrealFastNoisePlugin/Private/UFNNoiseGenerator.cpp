@@ -1,4 +1,4 @@
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
 
 
 UUFNNoiseGenerator::UUFNNoiseGenerator(const class FObjectInitializer& ObjectInitializer)
@@ -7,12 +7,12 @@ UUFNNoiseGenerator::UUFNNoiseGenerator(const class FObjectInitializer& ObjectIni
 
 }
 
-float UUFNNoiseGenerator::GetNoise2D(float aX, float aY)
+float UUFNNoiseGenerator::GetNoise2D(float InX, float InY)
 {
 	return -2.0f;
 }
 
-float UUFNNoiseGenerator::GetNoise3D(float aX, float aY, float aZ)
+float UUFNNoiseGenerator::GetNoise3D(float InX, float InY, float InZ)
 {
 	return -2.0f;
 }

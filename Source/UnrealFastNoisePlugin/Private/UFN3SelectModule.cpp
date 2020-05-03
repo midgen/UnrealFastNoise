@@ -1,55 +1,62 @@
-#include "UFN3SelectModule.h"
-#include "UFNNoiseGenerator.h"
+#include "UnrealFastNoisePlugin/Public/UFN3SelectModule.h"
 
-
-UUFN3SelectModule::UUFN3SelectModule(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+UUFN3SelectModule::UUFN3SelectModule(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+	, InputModule1(nullptr)
+	, InputModule2(nullptr)
+	, InputModule3(nullptr)
+	, UpperThreshold(0.f)
+	, LowerThreshold(0.f)
+	, Falloff(0.f)
+	, InterpType(ESelectInterpType::Linear)
+	, NumSteps(0)
 {
-
 }
 
-float UUFN3SelectModule::GetNoise3D(float aX, float aY, float aZ)
+float UUFN3SelectModule::GetNoise3D(float InX, float InY, float InZ)
 {
-	if (!(inputModule1 && inputModule2 && inputModule3 && selectModule)) {
+	if (!(InputModule1 && InputModule2 && InputModule3 && SelectModule))
+	{
 		return 0.0f;
 	}
 
-	float control = (selectModule->GetNoise3D(aX, aY, aZ));
-
+	float Control = (SelectModule->GetNoise3D(InX, InY, InZ));
 
 	// If there's no interpolation, easy mode
-	if (control >= upperThreshold) {
-		return inputModule1->GetNoise3D(aX, aY, aZ);
-	}
-	else if (control < upperThreshold && control >= lowerThreshold)
+	if (Control >= UpperThreshold)
 	{
-		return inputModule2->GetNoise3D(aX, aY, aZ);
+		return InputModule1->GetNoise3D(InX, InY, InZ);
 	}
-	else {
-		return inputModule3->GetNoise3D(aX, aY, aZ);
+	else if (Control < UpperThreshold && Control >= LowerThreshold)
+	{
+		return InputModule2->GetNoise3D(InX, InY, InZ);
 	}
-
+	else
+	{
+		return InputModule3->GetNoise3D(InX, InY, InZ);
+	}
 }
 
-float UUFN3SelectModule::GetNoise2D(float aX, float aY)
+float UUFN3SelectModule::GetNoise2D(float InX, float InY)
 {
-	if (!(inputModule1 && inputModule2 && inputModule3 && selectModule)) {
+	if (!(InputModule1 && InputModule2 && InputModule3 && SelectModule))
+	{
 		return 0.0f;
 	}
 
-	float control = (selectModule->GetNoise2D(aX, aY));
+	float Control = (SelectModule->GetNoise2D(InX, InY));
 
 	// If there's no interpolation, easy mode
-	if (control >= upperThreshold) {
-		return inputModule1->GetNoise2D(aX, aY);
-	}
-	else if (control < upperThreshold && control >= lowerThreshold)
+	if (Control >= UpperThreshold)
 	{
-		return inputModule2->GetNoise2D(aX, aY);
+		return InputModule1->GetNoise2D(InX, InY);
 	}
-	else {
-		return inputModule3->GetNoise2D(aX, aY);
+	else if (Control < UpperThreshold && Control >= LowerThreshold)
+	{
+		return InputModule2->GetNoise2D(InX, InY);
 	}
-
-
+	else
+	{
+		return InputModule3->GetNoise2D(InX, InY);
+	}
 }
-

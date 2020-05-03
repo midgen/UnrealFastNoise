@@ -1,18 +1,20 @@
 #pragma once
 
-#include "UFNNoiseGenerator.h"
-#include "CoreMinimal.h"
+#include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
+
 #include "UFNSplineGenerator.generated.h"
 
 UCLASS(BlueprintType)
-class UUFNSplineGenerator : public UUFNNoiseGenerator
+class UNREALFASTNOISEPLUGIN_API UUFNSplineGenerator : public UUFNNoiseGenerator
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 public:
-	float GetNoise3D(float aX, float aY, float aZ) override;
-	float GetNoise2D(float aX, float aY) override;
+	UUFNSplineGenerator(const FObjectInitializer& ObjectInitializer);
 
-	UFUNCTION(BlueprintCallable, Category="FastNoise")
+	float GetNoise3D(float InX, float InY, float InZ) override;
+	float GetNoise2D(float InX, float InY) override;
+
+	UFUNCTION(BlueprintCallable, Category = "FastNoise")
 	void AddSpline(USplineComponent* Spline);
 
 	UPROPERTY()
@@ -34,5 +36,5 @@ public:
 	  Values between Minimum and Maximum Distance will be run through this curve function,
 	  if provided.
 	*/
-	UCurveFloat *FalloffCurve;
+	UCurveFloat* FalloffCurve;
 };
