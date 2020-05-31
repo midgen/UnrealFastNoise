@@ -26,18 +26,18 @@
 // off every 'zix'.)
 //
 // UnrealEngine-ified by Chris Ashworth 2016
-// 
+//
 
 #pragma once
 
-#include <Runtime/CoreUObject/Public/UObject/Object.h>
 #include "UnrealFastNoisePlugin/Public/UFNNoiseGenerator.h"
+#include <Runtime/CoreUObject/Public/UObject/Object.h>
 
 #include "FastNoise.generated.h"
 
 UENUM(BlueprintType)
 enum class ENoiseType : uint8
-{ 
+{
 	Value,
 	ValueFractal,
 	Gradient,
@@ -45,38 +45,63 @@ enum class ENoiseType : uint8
 	Simplex,
 	SimplexFractal,
 	Cellular,
-	WhiteNoise 
+	WhiteNoise
 };
 UENUM(BlueprintType)
-enum class ESimpleNoiseType : uint8 
-{ 
-	SimpleValue UMETA(DisplayName="Value"),
+enum class ESimpleNoiseType : uint8
+{
+	SimpleValue UMETA(DisplayName = "Value"),
 	SimpleGradient UMETA(DisplayName = "Gradient"),
 	SimpleSimplex UMETA(DisplayName = "Simplex"),
 	SimpleWhiteNoise UMETA(DisplayName = "WhiteNoise")
 };
 UENUM(BlueprintType)
 enum class EFractalNoiseType : uint8
-{ 
+{
 	FractalValue UMETA(DisplayName = "Value"),
 	FractalGradient UMETA(DisplayName = "Gradient"),
 	FractalSimplex UMETA(DisplayName = "Simplex")
 };
 UENUM(BlueprintType)
-enum class EInterp : uint8 
-{ 
+enum class EInterp : uint8
+{
 	InterpLinear UMETA(DisplayName = "Linear"),
 	InterpHermite UMETA(DisplayName = "Hermite"),
 	InterpQuintic UMETA(DisplayName = "Quintic")
 };
 UENUM(BlueprintType)
-enum EFractalType { FBM, Billow, RigidMulti };
+enum class EFractalType : uint8
+{
+	FBM,
+	Billow,
+	RigidMulti
+};
 UENUM(BlueprintType)
-enum ECellularDistanceFunction { Euclidean, Manhattan, Natural };
+enum class ECellularDistanceFunction : uint8
+{
+	Euclidean,
+	Manhattan,
+	Natural
+};
 UENUM(BlueprintType)
-enum ECellularReturnType { CellValue, NoiseLookup, Distance, Distance2, Distance2Add, Distance2Sub, Distance2Mul, Distance2Div};
+enum class ECellularReturnType : uint8
+{
+	CellValue,
+	NoiseLookup,
+	Distance,
+	Distance2,
+	Distance2Add,
+	Distance2Sub,
+	Distance2Mul,
+	Distance2Div
+};
 UENUM(BlueprintType)
-enum EPositionWarpType { None, Regular, Fractal };
+enum class EPositionWarpType : uint8
+{
+	None,
+	Regular,
+	Fractal
+};
 UENUM(BlueprintType)
 enum class ESelectInterpType : uint8
 {
@@ -93,7 +118,6 @@ enum class ESelectInterpType : uint8
 	Step,
 	Linear
 };
-
 
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UFastNoise : public UUFNNoiseGenerator
@@ -129,7 +153,11 @@ public:
 
 	// Sets octave count for all fractal noise types
 	// Default: 3
-	void SetFractalOctaves(unsigned int octaves) { m_octaves = octaves; CalculateFractalBounding(); }
+	void SetFractalOctaves(unsigned int octaves)
+	{
+		m_octaves = octaves;
+		CalculateFractalBounding();
+	}
 
 	// Sets octave lacunarity for all fractal noise types
 	// Default: 2.0
@@ -137,7 +165,11 @@ public:
 
 	// Sets octave gain for all fractal noise types
 	// Default: 0.5
-	void SetFractalGain(float gain) { m_gain = gain; CalculateFractalBounding(); }
+	void SetFractalGain(float gain)
+	{
+		m_gain = gain;
+		CalculateFractalBounding();
+	}
 
 	// Sets method for combining octaves in all fractal noise types
 	// Default: FBM
@@ -161,7 +193,7 @@ public:
 	void SetPositionWarpAmp(float positionWarpAmp) { m_positionWarpAmp = positionWarpAmp / 0.45f; }
 	void SetPositionWarpType(EPositionWarpType positionWarpType) { m_positionWarpType = positionWarpType; }
 
-	//2D												
+	//2D
 	float GetValue(float x, float y);
 	float GetValueFractal(float x, float y);
 
@@ -177,120 +209,117 @@ public:
 	float GetWhiteNoiseInt(int x, int y);
 
 	FORCEINLINE float GetNoise(float x, float y)
-{
-	x *= m_frequency;
-	y *= m_frequency;
+	{
+		x *= m_frequency;
+		y *= m_frequency;
 
-	switch (m_noiseType)
-	{
-	case ENoiseType::Value:
-		return SingleValue(0, x, y);
-	case ENoiseType::ValueFractal:
-		switch (m_fractalType)
+		switch (m_noiseType)
 		{
-		case EFractalType::FBM:
-			return SingleValueFractalFBM(x, y);
-		case EFractalType::Billow:
-			return SingleValueFractalBillow(x, y);
-		case EFractalType::RigidMulti:
-			return SingleValueFractalRigidMulti(x, y);
+		case ENoiseType::Value:
+			return SingleValue(0, x, y);
+		case ENoiseType::ValueFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleValueFractalFBM(x, y);
+			case EFractalType::Billow:
+				return SingleValueFractalBillow(x, y);
+			case EFractalType::RigidMulti:
+				return SingleValueFractalRigidMulti(x, y);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Gradient:
+			return SingleGradient(0, x, y);
+		case ENoiseType::GradientFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleGradientFractalFBM(x, y);
+			case EFractalType::Billow:
+				return SingleGradientFractalBillow(x, y);
+			case EFractalType::RigidMulti:
+				return SingleGradientFractalRigidMulti(x, y);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Simplex:
+			return SingleSimplex(0, x, y);
+		case ENoiseType::SimplexFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleSimplexFractalFBM(x, y);
+			case EFractalType::Billow:
+				return SingleSimplexFractalBillow(x, y);
+			case EFractalType::RigidMulti:
+				return SingleSimplexFractalRigidMulti(x, y);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Cellular:
+			switch (m_cellularReturnType)
+			{
+			case ECellularReturnType::CellValue:
+			case ECellularReturnType::NoiseLookup:
+			case ECellularReturnType::Distance:
+				return SingleCellular(x, y);
+			default:
+				return SingleCellular2Edge(x, y);
+			}
+		case ENoiseType::WhiteNoise:
+			return GetWhiteNoise(x, y);
 		default:
 			return 0.0f;
 		}
-	case ENoiseType::Gradient:
-		return SingleGradient(0, x, y);
-	case ENoiseType::GradientFractal:
-		switch (m_fractalType)
-		{
-		case EFractalType::FBM:
-			return SingleGradientFractalFBM(x, y);
-		case EFractalType::Billow:
-			return SingleGradientFractalBillow(x, y);
-		case EFractalType::RigidMulti:
-			return SingleGradientFractalRigidMulti(x, y);
-		default:
-			return 0.0f;
-		}
-	case ENoiseType::Simplex:
-		return SingleSimplex(0, x, y);
-	case ENoiseType::SimplexFractal:
-		switch (m_fractalType)
-		{
-		case EFractalType::FBM:
-			return SingleSimplexFractalFBM(x, y);
-		case EFractalType::Billow:
-			return SingleSimplexFractalBillow(x, y);
-		case EFractalType::RigidMulti:
-			return SingleSimplexFractalRigidMulti(x, y);
-		default:
-			return 0.0f;
-		}
-	case ENoiseType::Cellular:
-		switch (m_cellularReturnType)
-		{
-		case ECellularReturnType::CellValue:
-		case ECellularReturnType::NoiseLookup:
-		case ECellularReturnType::Distance:
-			return SingleCellular(x, y);
-		default:
-			return SingleCellular2Edge(x, y);
-		}
-	case ENoiseType::WhiteNoise:
-		return GetWhiteNoise(x, y);
-	default:
-		return 0.0f;
 	}
-}
 	FORCEINLINE float GetNoise2D(float InX, float InY)
-{
-	switch (m_positionWarpType)
 	{
-	default:
-	case EPositionWarpType::None:
-		return GetNoise(InX, InY);
-	case EPositionWarpType::Fractal:
-		PositionWarpFractal(InX, InY);
-		return GetNoise(InX, InY);
-	case EPositionWarpType::Regular:
-		PositionWarp(InX, InY);
-		return GetNoise(InX, InY);
+		switch (m_positionWarpType)
+		{
+		default:
+		case EPositionWarpType::None:
+			return GetNoise(InX, InY);
+		case EPositionWarpType::Fractal:
+			PositionWarpFractal(InX, InY);
+			return GetNoise(InX, InY);
+		case EPositionWarpType::Regular:
+			PositionWarp(InX, InY);
+			return GetNoise(InX, InY);
+		}
 	}
-}
 
 	FORCEINLINE FVector GetNoise2DDeriv(float x, float y)
-{
-	FVector2D p = FVector2D(x, y);
-	p.X = FMath::FloorToFloat(p.X);
-	p.Y = FMath::FloorToFloat(p.Y);
-	FVector2D f = FVector2D(x, y) - p;
+	{
+		FVector2D p = FVector2D(x, y);
+		p.X = FMath::FloorToFloat(p.X);
+		p.Y = FMath::FloorToFloat(p.Y);
+		FVector2D f = FVector2D(x, y) - p;
 
-	
+		FVector2D u = f * f * f;
 
-	FVector2D u = f*f*f;
+		float a = GetNoise2D(p.X, p.Y);
+		float b = GetNoise2D(p.X + 1.f, p.Y);
+		float c = GetNoise2D(p.X, p.Y + 1.f);
+		float d = GetNoise2D(p.X + 1.0f, p.Y + 1.0f);
 
-	float a = GetNoise2D(p.X, p.Y);
-	float b = GetNoise2D(p.X + 1.f, p.Y);
-	float c = GetNoise2D(p.X, p.Y + 1.f);
-	float d = GetNoise2D(p.X + 1.0f, p.Y + 1.0f);
+		FVector result;
 
-	FVector result;
+		const FVector2D Intermediate = 6.0f * f * (f) * (FVector2D(b - a, c - a) + (a - b - c + d) * (FVector2D(u.Y, u.X)));
 
-	const FVector2D Intermediate = 6.0f*f*(f)*(FVector2D(b - a, c - a) + (a - b - c + d)*(FVector2D(u.Y, u.X)));
+		result = FVector(a + (b - a) * u.X + (c - a) * u.Y + (a - b - c + d) * u.X * u.Y,
+			Intermediate.X, Intermediate.Y);
 
-	result = FVector(a + (b - a)*u.X + (c - a)*u.Y + (a - b - c + d)*u.X*u.Y,
-		Intermediate.X, Intermediate.Y);
-
-	//result = FVector(a + (b - a)*u.X + (c - a)*u.Y + (a - b - c + d)*u.X*u.Y,
+		//result = FVector(a + (b - a)*u.X + (c - a)*u.Y + (a - b - c + d)*u.X*u.Y,
 		//6.0*f*(1.0 - f)*(FVector2D(b - a, c - a) + (a - b - c + d)*(FVector2D(u.Y, u.X))));
 
-	return result;
-
-}
+		return result;
+	}
 
 	void PositionWarp(float& x, float& y);
 	void PositionWarpFractal(float& x, float& y);
 
-	//3D												
+	//3D
 	float GetValue(float x, float y, float z);
 	float GetValueFractal(float x, float y, float z);
 
@@ -306,86 +335,86 @@ public:
 	float GetWhiteNoiseInt(int x, int y, int z);
 
 	FORCEINLINE float GetNoise(float x, float y, float z)
-{
-	x *= m_frequency;
-	y *= m_frequency;
-	z *= m_frequency;
+	{
+		x *= m_frequency;
+		y *= m_frequency;
+		z *= m_frequency;
 
-	switch (m_noiseType)
-	{
-	case ENoiseType::Value:
-		return SingleValue(0, x, y, z);
-	case ENoiseType::ValueFractal:
-		switch (m_fractalType)
+		switch (m_noiseType)
 		{
-		case EFractalType::FBM:
-			return SingleValueFractalFBM(x, y, z);
-		case EFractalType::Billow:
-			return SingleValueFractalBillow(x, y, z);
-		case EFractalType::RigidMulti:
-			return SingleValueFractalRigidMulti(x, y, z);
+		case ENoiseType::Value:
+			return SingleValue(0, x, y, z);
+		case ENoiseType::ValueFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleValueFractalFBM(x, y, z);
+			case EFractalType::Billow:
+				return SingleValueFractalBillow(x, y, z);
+			case EFractalType::RigidMulti:
+				return SingleValueFractalRigidMulti(x, y, z);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Gradient:
+			return SingleGradient(0, x, y, z);
+		case ENoiseType::GradientFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleGradientFractalFBM(x, y, z);
+			case EFractalType::Billow:
+				return SingleGradientFractalBillow(x, y, z);
+			case EFractalType::RigidMulti:
+				return SingleGradientFractalRigidMulti(x, y, z);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Simplex:
+			return SingleSimplex(0, x, y, z);
+		case ENoiseType::SimplexFractal:
+			switch (m_fractalType)
+			{
+			case EFractalType::FBM:
+				return SingleSimplexFractalFBM(x, y, z);
+			case EFractalType::Billow:
+				return SingleSimplexFractalBillow(x, y, z);
+			case EFractalType::RigidMulti:
+				return SingleSimplexFractalRigidMulti(x, y, z);
+			default:
+				return 0.0f;
+			}
+		case ENoiseType::Cellular:
+			switch (m_cellularReturnType)
+			{
+			case ECellularReturnType::CellValue:
+			case ECellularReturnType::NoiseLookup:
+			case ECellularReturnType::Distance:
+				return SingleCellular(x, y, z);
+			default:
+				return SingleCellular2Edge(x, y, z);
+			}
+		case ENoiseType::WhiteNoise:
+			return GetWhiteNoise(x, y, z);
 		default:
 			return 0.0f;
 		}
-	case ENoiseType::Gradient:
-		return SingleGradient(0, x, y, z);
-	case ENoiseType::GradientFractal:
-		switch (m_fractalType)
-		{
-		case EFractalType::FBM:
-			return SingleGradientFractalFBM(x, y, z);
-		case EFractalType::Billow:
-			return SingleGradientFractalBillow(x, y, z);
-		case EFractalType::RigidMulti:
-			return SingleGradientFractalRigidMulti(x, y, z);
-		default:
-			return 0.0f;
-		}
-	case ENoiseType::Simplex:
-		return SingleSimplex(0, x, y, z);
-	case ENoiseType::SimplexFractal:
-		switch (m_fractalType)
-		{
-		case EFractalType::FBM:
-			return SingleSimplexFractalFBM(x, y, z);
-		case EFractalType::Billow:
-			return SingleSimplexFractalBillow(x, y, z);
-		case EFractalType::RigidMulti:
-			return SingleSimplexFractalRigidMulti(x, y, z);
-		default:
-			return 0.0f;
-		}
-	case ENoiseType::Cellular:
-		switch (m_cellularReturnType)
-		{
-		case ECellularReturnType::CellValue:
-		case ECellularReturnType::NoiseLookup:
-		case ECellularReturnType::Distance:
-			return SingleCellular(x, y, z);
-		default:
-			return SingleCellular2Edge(x, y, z);
-		}
-	case ENoiseType::WhiteNoise:
-		return GetWhiteNoise(x, y, z);
-	default:
-		return 0.0f;
 	}
-}
 	FORCEINLINE float GetNoise3D(float InX, float InY, float InZ)
-{
-	switch (m_positionWarpType)
 	{
-	default:
-	case EPositionWarpType::None:
-		return GetNoise(InX, InY, InZ);
-	case EPositionWarpType::Fractal:
-		PositionWarpFractal(InX, InY, InZ);
-		return GetNoise(InX, InY, InZ);
-	case EPositionWarpType::Regular:
-		PositionWarp(InX, InY, InZ);
-		return GetNoise(InX, InY, InZ);
+		switch (m_positionWarpType)
+		{
+		default:
+		case EPositionWarpType::None:
+			return GetNoise(InX, InY, InZ);
+		case EPositionWarpType::Fractal:
+			PositionWarpFractal(InX, InY, InZ);
+			return GetNoise(InX, InY, InZ);
+		case EPositionWarpType::Regular:
+			PositionWarp(InX, InY, InZ);
+			return GetNoise(InX, InY, InZ);
+		}
 	}
-}
 
 	void PositionWarp(float& x, float& y, float& z);
 	void PositionWarpFractal(float& x, float& y, float& z);
