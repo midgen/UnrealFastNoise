@@ -11,7 +11,7 @@ class UNREALFASTNOISEPLUGIN_API UUFNBlueprintFunctionLibrary : public UBlueprint
 	GENERATED_UCLASS_BODY()
 	// Creates a new noise generator module. Note that not all parameters may be relevant e.g. Fractal noise types will ignore Cellular parameters
 	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise", meta=(HidePin = "outer", DefaultToSelf = "outer"))
-	static UUFNNoiseGenerator* CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType, EFractalType fractalType, EInterp interpolation, int32 seed = 1337, int32 octaves = 4, float frequency = 0.001f, float lacunarity = 2.0f, float fractalGain = 0.5f);
+	static UUFNNoiseGenerator* CreateNoiseGenerator(UObject* outer, EUFN_NoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType, EFractalType fractalType, EInterp interpolation, int32 seed = 1337, int32 octaves = 4, float frequency = 0.001f, float lacunarity = 2.0f, float fractalGain = 0.5f);
 	// Creates a Select module. Returns a value either from input1 or input 2, depending on the value returned from the select module. Has sine in/out smooth falloff option (may be wonky)
 	UFUNCTION(BlueprintPure, Category = "UnrealFastNoise", meta=(HidePin = "outer", DefaultToSelf = "outer"))
 	static UUFNNoiseGenerator* CreateSelectModule(UObject* outer, UUFNNoiseGenerator* inputModule1, UUFNNoiseGenerator* inputModule2, UUFNNoiseGenerator* selectModule, ESelectInterpType interpolationType = ESelectInterpType::None, float falloff = 0.0f, float threshold = 0.0f, int32 steps = 4);
