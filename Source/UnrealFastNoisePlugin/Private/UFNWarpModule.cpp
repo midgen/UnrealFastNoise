@@ -1,5 +1,7 @@
 #include "UnrealFastNoisePlugin/Public/UFNWarpModule.h"
 
+#include <UnrealFastNoisePlugin.h>
+
 UUFNWarpModule::UUFNWarpModule(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, InputModule(nullptr)

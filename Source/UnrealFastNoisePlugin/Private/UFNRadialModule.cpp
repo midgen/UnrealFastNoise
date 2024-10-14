@@ -2,6 +2,8 @@
 
 #include "UnrealFastNoisePlugin/Public/UnrealFastNoisePlugin.h"
 
+#include <FastNoise\FastNoise.h>
+
 UUFNRadialModule::UUFNRadialModule(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, InputModule1(nullptr)

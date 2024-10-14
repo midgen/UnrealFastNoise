@@ -4,6 +4,8 @@
 
 #include "UFNWarpModule.generated.h"
 
+enum class EWarpIterations : uint8;
+
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UUFNWarpModule : public UUFNNoiseGenerator
 {

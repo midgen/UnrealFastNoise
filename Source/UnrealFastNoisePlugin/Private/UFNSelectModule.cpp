@@ -1,5 +1,7 @@
 #include "UnrealFastNoisePlugin/Public/UFNSelectModule.h"
 
+#include <FastNoise\FastNoise.h>
+
 UUFNSelectModule::UUFNSelectModule(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 	, InputModule1(nullptr)

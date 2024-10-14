@@ -4,6 +4,8 @@
 
 #include "UFN3SelectModule.generated.h"
 
+enum class ESelectInterpType : uint8;
+
 UCLASS()
 class UNREALFASTNOISEPLUGIN_API UUFN3SelectModule : public UUFNNoiseGenerator
 {
