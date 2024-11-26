@@ -36,7 +36,7 @@
 #include "FastNoise.generated.h"
 
 UENUM(BlueprintType)
-enum class ENoiseType : uint8
+enum class EUFN_NoiseType : uint8
 {
 	Value,
 	ValueFractal,
@@ -149,7 +149,7 @@ public:
 
 	// Sets noise return type of GetNoise(...)
 	// Default: Simplex
-	void SetNoiseType(ENoiseType noiseType) { m_noiseType = noiseType; }
+	void SetNoiseType(EUFN_NoiseType noiseType) { m_noiseType = noiseType; }
 
 	// Sets octave count for all fractal noise types
 	// Default: 3
@@ -215,9 +215,9 @@ public:
 
 		switch (m_noiseType)
 		{
-		case ENoiseType::Value:
+		case EUFN_NoiseType::Value:
 			return SingleValue(0, x, y);
-		case ENoiseType::ValueFractal:
+		case EUFN_NoiseType::ValueFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -229,9 +229,9 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Gradient:
+		case EUFN_NoiseType::Gradient:
 			return SingleGradient(0, x, y);
-		case ENoiseType::GradientFractal:
+		case EUFN_NoiseType::GradientFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -243,9 +243,9 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Simplex:
+		case EUFN_NoiseType::Simplex:
 			return SingleSimplex(0, x, y);
-		case ENoiseType::SimplexFractal:
+		case EUFN_NoiseType::SimplexFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -257,7 +257,7 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Cellular:
+		case EUFN_NoiseType::Cellular:
 			switch (m_cellularReturnType)
 			{
 			case ECellularReturnType::CellValue:
@@ -267,7 +267,7 @@ public:
 			default:
 				return SingleCellular2Edge(x, y);
 			}
-		case ENoiseType::WhiteNoise:
+		case EUFN_NoiseType::WhiteNoise:
 			return GetWhiteNoise(x, y);
 		default:
 			return 0.0f;
@@ -342,9 +342,9 @@ public:
 
 		switch (m_noiseType)
 		{
-		case ENoiseType::Value:
+		case EUFN_NoiseType::Value:
 			return SingleValue(0, x, y, z);
-		case ENoiseType::ValueFractal:
+		case EUFN_NoiseType::ValueFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -356,9 +356,9 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Gradient:
+		case EUFN_NoiseType::Gradient:
 			return SingleGradient(0, x, y, z);
-		case ENoiseType::GradientFractal:
+		case EUFN_NoiseType::GradientFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -370,9 +370,9 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Simplex:
+		case EUFN_NoiseType::Simplex:
 			return SingleSimplex(0, x, y, z);
-		case ENoiseType::SimplexFractal:
+		case EUFN_NoiseType::SimplexFractal:
 			switch (m_fractalType)
 			{
 			case EFractalType::FBM:
@@ -384,7 +384,7 @@ public:
 			default:
 				return 0.0f;
 			}
-		case ENoiseType::Cellular:
+		case EUFN_NoiseType::Cellular:
 			switch (m_cellularReturnType)
 			{
 			case ECellularReturnType::CellValue:
@@ -394,7 +394,7 @@ public:
 			default:
 				return SingleCellular2Edge(x, y, z);
 			}
-		case ENoiseType::WhiteNoise:
+		case EUFN_NoiseType::WhiteNoise:
 			return GetWhiteNoise(x, y, z);
 		default:
 			return 0.0f;
@@ -432,7 +432,7 @@ protected:
 	int m_seed = 1337;
 	float m_frequency = 0.01f;
 	EInterp m_interp = EInterp::InterpQuintic;
-	ENoiseType m_noiseType = ENoiseType::Simplex;
+	EUFN_NoiseType m_noiseType = EUFN_NoiseType::Simplex;
 
 	EPositionWarpType m_positionWarpType = EPositionWarpType::None;
 

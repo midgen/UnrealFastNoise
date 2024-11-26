@@ -19,7 +19,7 @@ UUFNBlueprintFunctionLibrary::UUFNBlueprintFunctionLibrary(const class FObjectIn
 {
 }
 
-UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, ENoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType, EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain)
+UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateNoiseGenerator(UObject* outer, EUFN_NoiseType noiseType, ECellularDistanceFunction cellularDistanceFunction, ECellularReturnType cellularReturnType, EFractalType fractalType, EInterp interpolation, int32 seed, int32 octaves, float frequency, float lacunarity, float fractalGain)
 {
 	UFastNoise* NoiseGen = NewObject<UFastNoise>(outer);
 
@@ -146,16 +146,16 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateSimpleNoiseGenerator(UOb
 	switch (noiseType)
 	{
 	case ESimpleNoiseType::SimpleGradient:
-		NoiseGen->SetNoiseType(ENoiseType::Gradient);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::Gradient);
 		break;
 	case ESimpleNoiseType::SimpleSimplex:
-		NoiseGen->SetNoiseType(ENoiseType::Simplex);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::Simplex);
 		break;
 	case ESimpleNoiseType::SimpleValue:
-		NoiseGen->SetNoiseType(ENoiseType::Value);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::Value);
 		break;
 	case ESimpleNoiseType::SimpleWhiteNoise:
-		NoiseGen->SetNoiseType(ENoiseType::WhiteNoise);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::WhiteNoise);
 		break;
 	}
 
@@ -173,13 +173,13 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateFractalNoiseGenerator(UO
 	switch (noiseType)
 	{
 	case EFractalNoiseType::FractalGradient:
-		NoiseGen->SetNoiseType(ENoiseType::GradientFractal);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::GradientFractal);
 		break;
 	case EFractalNoiseType::FractalSimplex:
-		NoiseGen->SetNoiseType(ENoiseType::SimplexFractal);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::SimplexFractal);
 		break;
 	case EFractalNoiseType::FractalValue:
-		NoiseGen->SetNoiseType(ENoiseType::ValueFractal);
+		NoiseGen->SetNoiseType(EUFN_NoiseType::ValueFractal);
 		break;
 	}
 
@@ -198,7 +198,7 @@ UUFNNoiseGenerator* UUFNBlueprintFunctionLibrary::CreateCellularNoiseGenerator(U
 {
 	UFastNoise* NoiseGen = NewObject<UFastNoise>(outer);
 
-	NoiseGen->SetNoiseType(ENoiseType::Cellular);
+	NoiseGen->SetNoiseType(EUFN_NoiseType::Cellular);
 	NoiseGen->SetSeed(seed);
 	NoiseGen->SetFrequency(frequency);
 	NoiseGen->SetCellularDistanceFunction(cellularDistanceFunction);
